@@ -7,7 +7,7 @@ struct dir {
     char* bedGeo;
     char* nomeQry;
     char* diretorioSaida;
-}dir;
+}direto;
 
 void splitPath(char *fullPath, char *path, int lenPath, char *nomeArq, int lenNomeArq, char *extArq, int lenExtArq) {
     char* barra = strrchr(fullPath, '/');
