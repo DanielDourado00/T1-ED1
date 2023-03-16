@@ -1,11 +1,39 @@
 #include "biblioteca.h"
-#ifndef parameters_h
-#define parameters_h
 
-void splitPath(char *fullPath, 
-	       char *path, int lenPath,
-	       char *nomeArq, int lenNomeArq,
-	       char *extArq, int lenExtArq);
+#ifndef PATH__
+#define PATH__
+
+/*
+   Este modulo prove funcoes para manipulacao de caminhos de arquivos.
+   Basicamente, exitem 2 tipos de funcoes:
+
+      - separam caminho em seus componentes: splitPath, getFileName, getPath
+      - constroem caminho a partir de seus componentes: joinFilePath,
+          joinAll, normalizePath.
+
+   Um caminho completo (fullPath) compreende uma sequencia de subdiretorios(path),
+   o nome do arquivo e sua extensao.
+   O caminho (path) e´ toda a subcadeia que esta' esquerda do ultimo separador ´/´,
+   incluindo-o. A extensao é a subcadeia que esta' `a direita do ultimo 
+   separador '.', incluindo-o. O nome do arquivo é a subcadeia que esta´ entre
+   estes dois últimos.
+
+   Nesta operacoes, um caminho vazio ou um componente vazio e´ representado
+   por uma string vazia.
+
+  Os resultados das operacoes sao atribuidos a paramentros da funcao.
+  Este parametros sao vetores de caracteres pre-alocados. A cada um destes
+  parametros, existe um respectivo parametro que indica seu tamanho (em caracteres).
+
+ */
+
+
+
+typedef void* Path;          // será usado no .c path para alocar memoria.
+Path createParameters();    // vai para parameters.c
+
+
+void splitPath(char *fullPath,char *path, int lenPath, char *nomeArq, int lenNomeArq, char *extArq, int lenExtArq);
 /*
     Dado um caminho (fullPath), copia cada um de seus componentes
     nos parametros path (caminho do arquivo), nomeArq (nome do arquivo, sem
@@ -35,7 +63,7 @@ void joinFilePath(char *path, char *fileName, char *fullPath, int lenFullPath);
    "aaa/bbb"    "c"      =>  "aaa/bbb/c"
  */
 
-void joinAll(char *path, char *fileName, char *ext, char *fullPath, int lenfullPath);
+void joinAll(char *path, char *fileName, char *ext, char *fullPath, int lenFullPath);
 /*
    Semelhante a joinFilePath, porem, a extensao do arquivo e´ informado explicitamente
    pelo parametro ext. Exemplos:
