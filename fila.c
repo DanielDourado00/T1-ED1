@@ -1,244 +1,158 @@
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef _LISTA_H
+#define _LISTA_H
 
-/*
-            Aula 257: Lista Duplamente Encadeada
+#include <stdbool.h>
 
-            Código escrito por Wagner Gaspar
-            Agosto de 2021
+/**
+Uma lista e´ uma colecao ordenada de itens (ou seja, um elemento possui um 
+antecessor e um sucessor)  em que seus elementos podem
+ser acessados atraves de sua posicao (tipo Posic). 
+Uma lista sem nenhum elemento (comprimento 0) e' denominada lista vazia.
+
+Uma instancia do tipo Posic indica a posicao de um item dentro da lista. 
+Este tipo possui um valor invalido que indica nao se referir a nenhum item. 
+Tal valor invalido e' denotado por NIL.
+
+Este modulo prove diversos iteradores: 1 deles genérico e 3 comuns a linguagens
+de programacao funcionais (high-order functions).
 */
 
-typedef struct no{
-    int valor;
-    struct no *proximo;
-    struct no *anterior;
-}No;
+typedef void *Lista;
+typedef void *Posic;
+typedef void *Item;
 
-// procedimento para inserir no início
-void inserir_no_inicio(No **lista, int num){
-    No *novo = malloc(sizeof(No));
+typedef void *Iterador;
+typedef void *Clausura;
 
-    if(novo){
-        novo->valor = num;
-        novo->proximo = *lista;
-        novo->anterior = NULL;
-        if(*lista)
-            (*lista)->anterior = novo;
-        *lista = novo;
-    }
-    else
-        printf("Erro ao alocar memoria!\n");
-}
+#define NIL NULL;
+#define CAPAC_ILIMITADA -1
 
-// procedimento para inserir no fim
-void inserir_no_fim(No **lista, int num){
-    No *aux, *novo = malloc(sizeof(No));
+/** Retorna uma lista vazia. A lista pode definir um limite maximo de 
+elementos armazenados (capacidade). Caso capacidade < 0, o tamanho da lista é 
+ilimitado */
+Lista createLst(int capacidade);
 
-    if(novo){
-        novo->valor = num;
-        novo->proximo = NULL;
+/** Retorna o numero de elementos da lista. */
+int lengthLst(Lista L);
 
-        // é o primeiro?
-        if(*lista == NULL){
-            *lista = novo;
-            novo->anterior = NULL;
-        }
-        else{
-            aux = *lista;
-            while(aux->proximo)
-                aux = aux->proximo;
-            aux->proximo = novo;
-            novo->anterior = aux;
-        }
-    }
-    else
-        printf("Erro ao alocar memoria!\n");
-}
+/** Retorna a capacidade da lista. Retorna -1, se a capacidade é ilimitada */
+int maxLengthLst(Lista L);
 
-// procedimento para inserir no meio
-void inserir_no_meio(No **lista, int num, int ant){
-    No *aux, *novo = malloc(sizeof(No));
+/** Retorna verdadeiro se a lista L estiver vazia */
+bool isEmptyLst(Lista L);
 
-    if(novo){
-        novo->valor = num;
-        // é o primeiro?
-        if(*lista == NULL){
-            novo->proximo = NULL;
-            novo->anterior = NULL;
-            *lista = novo;
-        }
-        else{
-            aux = *lista;
-            while(aux->valor != ant && aux->proximo)
-                aux = aux->proximo;
-            novo->proximo = aux->proximo;
-            if(aux->proximo)
-                aux->proximo->anterior = novo;
-            novo->anterior = aux;
-            aux->proximo = novo;
-        }
-    }
-    else
-        printf("Erro ao alocar memoria!\n");
-}
+/** Retorna verdadeiro se a lista L estiver cheia. Ou seja, se a lista
+   tiver sido criada com uma capacidade máxima e lenght(L) == maxLength(L). */
+bool isFullLst(Lista L);
 
-void inserir_ordenado(No **lista, int num){
-    No *aux, *novo = malloc(sizeof(No));
+/**  Insere o item info no final da lista L. O comprimento da
+lista e' acrescido de 1 elemento. 
+Retorna um indicador para o elemento acrescentado; ou NIL, se a lista estiver
+cheia */
+Posic insertLst(Lista L, Item info);
 
-    if(novo){
-        novo->valor = num;
-        // a lista está vazia?
-        if(*lista == NULL){
-            novo->proximo = NULL;
-            novo->anterior = NULL;
-            *lista = novo;
-        } // é o menor?
-        else if(novo->valor < (*lista)->valor){
-            novo->proximo = *lista;
-            (*lista)->anterior = novo;
-            *lista = novo;
-        }
-        else{
-            aux = *lista;
-            while(aux->proximo && novo->valor > aux->proximo->valor)
-                aux = aux->proximo;
-            novo->proximo = aux->proximo;
-            if(aux->proximo)
-                aux->proximo->anterior = novo;
-            novo->anterior = aux;
-            aux->proximo = novo;
-        }
-    }
-    else
-        printf("Erro ao alocar memoria!\n");
-}
+/** Remove e retorna o primeiro elemento da lista L. 
+    A lista nao pode  estar vazia */
+Item popLst(Lista L);
 
-No* remover(No **lista, int num){
-    No *aux, *remover = NULL;
+/** Remove o elemento da lista L indicado por p.  p deve indicar um elemento existente em L. O comprimento da lista e' diminuido de 1 elemento. */
+void removeLst(Lista L, Posic p);
 
-    if(*lista){
-        if((*lista)->valor == num){
-            remover = *lista;
-            *lista = remover->proximo;
-            if(*lista)
-                (*lista)->anterior = NULL;
-        }
-        else{
-            aux = *lista;
-            while(aux->proximo && aux->proximo->valor != num)
-                aux = aux->proximo;
-            if(aux->proximo){
-                remover = aux->proximo;
-                aux->proximo = remover->proximo;
-                if(aux->proximo)
-                    aux->proximo->anterior = aux;
-            }
-        }
-    }
-    return remover;
-}
+/** Retorna o valor do item da lista indicado por p.
+    p deve indicar um elemento existente em L. */
+Item getLst(Lista L, Posic p);
 
-No* buscar(No **lista, int num){
-    No *aux, *no = NULL;
+/** Insere o item info na posicao imediatamente anterior ao
+item indicado por p. O comprimento da lista e' acrescido de 1 elemento.
+Retorna um indicador para o elemento acrescentado. p deve indicar um 
+elemento existente em L.*/
+Posic insertBefore(Lista L,Posic p, Item info);
+ 
 
-    aux = *lista;
-    while(aux && aux->valor != num)
-        aux = aux->proximo;
-    if(aux)
-        no = aux;
-    return no;
-}
+/** Insere o item info na posicao imediatamente posterior ao
+item indicado por p. O comprimento da lista e' acrescido de 1 elemento.
+Retorna um indicador para o elemento acrescentado. p deve indicar um 
+elemento existente em L.*/
+Posic insertAfterLst(Lista L,Posic p, Item info); 
 
-void imprimir(No *no){
-    printf("\n\tLista: ");
-    while(no){
-        printf("%d ", no->valor);
-        no = no->proximo;
-    }
-    printf("\n\n");
-}
+/** Retorna o indicador do primeiro elemento de L. Se
+length(L)=0, retorna NIL. */
+Posic getFirstLst(Lista L);
 
-// retorna ponteiro para o último nó da lista
-No* ultimo(No **lista){
-    No *aux = *lista;
-    while(aux->proximo)
-        aux = aux->proximo;
-    return aux;
-}
+/** Retorna o indicador do elemento de L seguinte ao elemento
+indicado por p. Se p for o ultimo elemento da lista, retorna NIL.
+p deve indicar um elemento existente em L.*/
+Posic getNextLst(Lista L,Posic p);
 
-// imprime a lista do fim para o início
-// recebe um ponteiro para o último nó da lista
-void imprimirContrario(No *no){
-    printf("\n\tLista: ");
-    while(no){
-        printf("%d ", no->valor);
-        no = no->anterior;
-    }
-    printf("\n\n");
-}
+/** Retorna o indicador do ultimo elemento de L. Se
+length(L)=0, retorna NIL.*/
+Posic getLastLst(Lista L);
 
-int main(){
+/** Retorna o indicador do elemento de L anterior ao elemento
+indicado por p. Se p for o primeiro elemento da lista, retorna NIL.
+p deve indicar um elemento existente em L. */
+Posic getPreviousLst(Lista L,Posic p);
 
-    int opcao, valor, anterior;
-    No *removido, *lista = NULL;
+/** Libera toda memoria alocada pela lista. */
+void killLst(Lista L);
 
-    do{
-        printf("\n\t0 - Sair\n\t1 - InserirI\n\t2 - inserirF\n\t3 - InserirM\n\t4 - InserirO\n\t5 - Remover\n\t6 - Imprimir\n\t7 - Buscar\n\t8 - ImprimirC\n");
-        scanf("%d", &opcao);
+/**
+ ** Iteradores
+ **
+ ** (nota: existe uma certa redundancia com getFirst, getLast, 
+ **  getNext e getPrevious).
+ **/
 
-        switch(opcao){
-        case 1:
-            printf("Digite um valor: ");
-            scanf("%d", &valor);
-            inserir_no_inicio(&lista, valor);
-            break;
-        case 2:
-            printf("Digite um valor: ");
-            scanf("%d", &valor);
-            inserir_no_fim(&lista, valor);
-            break;
-        case 3:
-            printf("Digite um valor e o valor de referencia: ");
-            scanf("%d%d", &valor, &anterior);
-            inserir_no_meio(&lista, valor, anterior);
-            break;
-        case 4:
-            printf("Digite um valor: ");
-            scanf("%d", &valor);
-            inserir_ordenado(&lista, valor);
-            break;
-        case 5:
-            printf("Digite um valor a ser removido: ");
-            scanf("%d", &valor);
-            removido = remover(&lista, valor);
-            if(removido){
-                printf("Elemento a ser removido: %d\n", removido->valor);
-                free(removido);
-            }
-            else
-                printf("Elemento inexistente!\n");
-            break;
-        case 6:
-            imprimir(lista);
-            break;
-        case 7:
-            printf("Digite um valor a ser buscado: ");
-            scanf("%d", &valor);
-            removido = buscar(&lista, valor);
-            if(removido)
-                printf("Elemento encontrado: %d\n", removido->valor);
-            else
-                printf("Elemento nao encontrado!\n");
-            break;
-        case 8:
-            imprimirContrario(ultimo(&lista));
-            break;
-        default:
-            if(opcao != 0)
-                printf("Opcao invalida!\n");
-        }
+/**
+   Retorna um iterador sobre a lista L. 
+   O iterador "anda" do inicio ate' o fim, caso reverso for falso;
+   do fim para o inicio, se reverso for verdadeiro.
+ */
+Iterador createIterador(Lista L, bool reverso);
 
-    }while(opcao != 0);
+/**
+   Retorna verdadeiro caso o iterador esteja esgotado,
+   i.e., todos os item ja' tenham sido retornados; falso,
+   caso contrario.
+ */
+bool isIteratorEmpty(Lista L, Iterador it);
 
-    return 0;
-}
+/**
+   Retorna o proximo item. O iterador nao deve estar esgotado.
+   Caso o item retornado seja o ultima, subsequentes invocacoes
+   a isIteratorEmpty retornam verdadeiro.
+ */
+Item getIteratorNext(Lista L, Iterador it);
+
+/**
+   Libera os recursos usados pelo iterador.
+ */
+void killIterator(Lista L, Iterador it);
+
+/**
+ ** High-order functions
+ **/
+
+
+typedef Item (*Apply)(Item item);
+typedef bool (*Check)(Item item);
+typedef void (*ApplyClosure)(Item item, Clausura c);
+
+/** Cria uma nova lista. Aplica a funcao f a cada item de L
+    e insere o resultado na nova lista.
+ */
+Lista map(Lista L,Apply f);
+
+/**
+   Cria uma nova lista contendo os itens de L para os quais a
+   invocacao da funcao f retornar verdeira.
+ */
+Lista filter(Lista L, Check f);
+
+/**
+   Aplica a funcao f a cada elemento de L, possivelmente, atualizando
+   o conteudo de c.
+ */
+void fold(Lista L, ApplyClosure f, Clausura c);
+
+#endif
