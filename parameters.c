@@ -1,47 +1,5 @@
 #include "parameters.h"
 
-/* typedef struct parameters {
-    char* diretorioEntrada; // -e <diretorio de entrada>
-    char* nomeGeo;          // -f <nome do arquivo .geo
-    char* diretoriosaida;   // -o <diretorio de saida>
-}parameters;
-
-Parameters createParameters(){                                              //Cria um tipo abstrato de dados
-    parameters* parametros = (parameters*) malloc(sizeof(parameters));      //Aloca memoria para o tipo abstrato de dados
-
-    if (parametros == NULL){                                                //Verifica se a memoria foi alocada
-        printf("Erro ao alocar memoria para a tad parametros /n FINALIZANDO PROGRAMA");
-        exit(1);
-    }
-    parametros -> diretorioEntrada = NULL;                                  //Inicializa os campos da tad
-    parametros -> nomeGeo = NULL;
-    parametros -> diretoriosaida = NULL;
-
-    return parametros;
-} */
-
-typedef struct Path
-{                           // Cria um tad
-    char *diretorioEntrada; // -e <diretorio de entrada>
-    char *nomeGeo;          // -f <nome do arquivo .geo
-    char *diretoriosaida;   // -o <diretorio de saida>
-} Path;
-
-Path createParameters()
-{                                                    // Cria um tipo abstrato de dados
-    Path *parametros = (Path *)malloc(sizeof(Path)); // Aloca memoria para minha tad parametros que é do tipo Path ou seja um ponteiro para Path(void), retorna qualquer coisa para minha memoria.
-    if (parametros == NULL)
-    { // Verifica se a memoria foi alocada
-
-        printf("Erro ao alocar memoria para a tad parametros /n FINALIZANDO PROGRAMA");
-        exit(1); // Finaliza o programa
-    }
-
-    // limpar lixo dos ponteiro alocados
-    parametros->diretorioEntrada = NULL; // Inicializa os campos da tad
-    parametros->nomeGeo = NULL;          // Inicializa os campos da tad
-    parametros->diretoriosaida = NULL;   // Inicializa os campos da tad
-}
 
 void splitPath(char *fullPath, char *path, int lenPath, char *nomeArq, int lenNomeArq, char *extArq, int lenExtArq)
 {
@@ -73,23 +31,37 @@ void splitPath(char *fullPath, char *path, int lenPath, char *nomeArq, int lenNo
 
 void joinFilePath(char *path, char *fileName, char *fullPath, int lenFullPath)
 {
-
-    strcat(path, fileName);
-    strcat(fullPath, path);
+    if (path[strlen(path) - 1] == '/') // Verifica se a string tem uma barra (auxiliar na concatenação)
+    {
+        strcpy(fullPath, path);        // Copia a string para o nome do arquivo FULL
+        strcat(fullPath, "/");         // Se tiver, coloca um caractere nulo no final da string
+        strcat(fullPath, fileName);    // Concatena a string com o nome do arquivo
+        return;
+    }else if (path[strlen(path) - 1] != '/'){       // Verifica se a string tem uma barra (auxiliar na concatenação)
+        strcat(fullPath, fileName);    // Concatena a string com o nome do arquivo
+        return;
+    }
+    
 }
 
 void joinAll(char *path, char *fileName, char *ext, char *fullPath, int lenfullPath)
 {
-    strcat(fullPath, path);
-    strcat(fullPath, "/");
-    strcat(fullPath, fileName);
-    strcat(fullPath, ext);
+    strcpy(fullPath, path);                             // Copia a string para o nome do arquivo FULL
+    if (fullPath[strlen(fullPath) - 1] != '/')          // Verifica se a string tem uma barra (auxiliar na concatenação)
+    {
+        strcat(fullPath, "/");                          // Se tiver, coloca um caractere nulo no final da string
+    }
+    {
+        strcat(fullPath, fileName);
+        strcat(fullPath, ext);
+    }
+    
 }
 
 void getFileName(char *fullPath, char *fileName, char *lenFileName)
 {
 
-    char *ponto = strrchr(fullPath, '/');
+    char *ponto = strrchr(fullPath, '/');       // Pega o ultimo caractere '/' da string
 
     if (ponto == NULL)
     {
@@ -105,16 +77,16 @@ void getFileName(char *fullPath, char *fileName, char *lenFileName)
 
 void getPath(char *fullPath, char *path, int lenPath)
 {
-    path = realloc(path, sizeof(char) * (strlen(fullPath) + 1));            //Alocando memoria para path
-    strcpy(path, fullPath);                                                 //copiando o conteudo de fullPath para path
-    if (strrchr(path, '/') != NULL)                                         //Verifica se a string tem uma barra
+    path = realloc(path, sizeof(char) * (strlen(fullPath) + 1)); // Alocando memoria para path
+    strcpy(path, fullPath);                                      // copiando o conteudo de fullPath para path
+    if (strrchr(path, '/') != NULL)                              // Verifica se a string tem uma barra
     {
-        *(strrchr(path, '/') + 1) = '\0';                                   //Se tiver, coloca um caractere nulo no final da string
+        *(strrchr(path, '/') + 1) = '\0'; // Se tiver, coloca um caractere nulo no final da string
     }
     else
     {
-        strcpy(path, "");                                                   //Se não tiver, copia uma string vazia para o path
-    }   
+        strcpy(path, ""); // Se não tiver, copia uma string vazia para o path
+    }
 }
 
 void normalizePath(char *path, char *normPath, int lenNormPath)
@@ -129,6 +101,6 @@ void normalizePath(char *path, char *normPath, int lenNormPath)
     else
     {
         normPath = path;
-         *(path + strlen( path )-1)  = '\0';// se tem "/" retira
+        *(path + strlen(path) - 1) = '\0'; // se tem "/" retira
     }
 }

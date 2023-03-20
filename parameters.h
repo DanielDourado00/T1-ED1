@@ -31,6 +31,9 @@
 
 typedef void* Path;          // será usado no .c path para alocar memoria.
 Path createParameters();    // vai para parameters.c
+void printarpath(Path parameters); //funcao para printar o path
+char* getpath(Path parameters); //funcao para pegar o path
+void freeParameters(Path parameters); //
 
 
 void splitPath(char *fullPath,char *path, int lenPath, char *nomeArq, int lenNomeArq, char *extArq, int lenExtArq);
