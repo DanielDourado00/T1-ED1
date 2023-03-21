@@ -215,20 +215,61 @@ int readParam(int argc, char **argv, void *parameters)
             normalizePath(pea, normPath, len);
             setpea(parameters, normPath);
 
-        case 'f': 
-            char* namegeo = calloc(strlen(optarg) + 1, sizeof(char));
-            char* namegeoExt = calloc(strlen(optarg) + 1, sizeof(char));
+        case 'f': // -f arq.geo Arquivo com a descrição da cidade. Este arquivo deve estar sob o diretório $DIR_ENTRADA.
+            char *namegeo = calloc(strlen(optarg) + 1, sizeof(char));
+            char *namegeoExt = calloc(strlen(optarg) + 1, sizeof(char));
             char *ext = ".geo";
             if (!getpea(parameters))
             {
-                char* pea = calloc(4 + 1, sizeof(char)); //seria 3 mas tem que colocar o \0
+                char *pea = calloc(4 + 1, sizeof(char)); // seria 3 mas tem que colocar o \0
                 strcpy(pea, "./");
                 setpea(parameters, pea);
             }
             read_geo = true;
             strcpy(namegeo, optarg);
 
-            char* getgeofullpath = calloc(strlen(getpea(parameters)) + strlen(namegeo) + 1, sizeof(char));
+            char *getgeofullpath = calloc(strlen(getpea(parameters)) + strlen(namegeo) + 1, sizeof(char));
+
+            joinFilePath(getpea(parameters), namegeo, getgeofullpath, len);
+            strcpy(namegeoExt, namegeo);             // copia o nome do arquivo geo para o nome do arquivo geo sem extensao
+            if (namegeo[strlen(namegeo) - 4] == '.') // verifica se o nome do arquivo geo tem extensao
+            {
+                namegeoExt[strlen(namegeoExt) - 4] = '\0'; // se tiver, remove a extensao sendo namegeoExt = nome do arquivo geo sem extensao
+                joinAll(getpea(parameters), namegeo, ext, getgeofullpath, len);
+
+                setnamegeo(parameters, namegeo);                //envia o nome do arquivo geo para a tad parameters
+                setnamegeoExt(parameters, namegeoExt);          //envia o nome do arquivo geo sem extensao para a tad parameters
+                setgeofullpath(parameters, getgeofullpath);     //envia o path completo do arquivo geo para a tad parameters
+                break;
+            }
+        case 'o': // -o path  Diretório-base de saída ($DIR_SAIDA)
+            char *psa = calloc(strlen(optarg) + 2, sizeof(char));       // aloca memoria para o path de saida
+            strcpy(psa, optarg);                                        // copia o path de saida para a variavel psa
+            read_psa = true;                                            // seta a flag de path de saida como verdadeira
+            normalizePath(psa, normPath, len);                          // normaliza o path de saida para ser usada na tad parameters
+            setpsa(parameters, psa);                                    // seta o path de saida
+            break;
+
+        case 'q':                                                        // -q arqcons.qry  Arquivo com consultas. Este arquivo deve estar sob o diretório $DIR_ENTRADA.
+            char *nameqry = calloc(strlen(optarg) + 1, sizeof(char));    // aloca memoria para o nome do arquivo qry
+            char *nameqryExt = calloc(strlen(optarg) + 1, sizeof(char)); // aloca memoria para o nome do arquivo qry sem extensao
+            if (!getpea(parameters))
+            {
+                char *pea = calloc(4 + 1, sizeof(char)); // seria 3 mas tem que colocar o \0
+                strcpy(pea, "./");
+                setpea(parameters, pea);
+            }
+            read_qry = true;    
+            strcpy(nameqry, optarg); // copia o nome do arquivo qry para o nome do arquivo qry com extensao   
+            char*  qryfullpath = calloc(strlen(getpea(parameters)) + strlen(nameqry) + 1, sizeof(char)); // aloca memoria para o path completo do arquivo qry
+
+            joinFilePath(getpea(parameters), nameqry, qryfullpath, len); // junta o path de entrada com o nome do arquivo qry para formar o path completo do arquivo qry
+            while (nameqry, '/') // verifica se o nome do arquivo qry tem barra
+            {
+             nameqry = strrchr(nameqry, '/') + 1; // se tiver, pega o nome do arquivo qry sem a barra, a funcao strrchr retorna o ultimo caractere da string, lendo ele de tras pra frente
+            strcpy (nameqryExt, nameqry); // copia o nome do arquivo qry sem a barra para o nome do arquivo qry sem extensao
+            }
+            
         }
     }
 }
