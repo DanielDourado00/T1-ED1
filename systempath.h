@@ -17,7 +17,7 @@ void setpsa(void* parameters, char* psa);
 void setnamegeo(void* parameters , char* namegeo);
 void setnamegeoExt(void* parameters, char* namegeoExt);
 void setnameqry(void *parameters, char *nameqry);
-void setnameqryExt(void *parameters, char *nameqryExt)
+void setnameqryExt(void *parameters, char *nameqryExt);
 void setpsageosvg(void *parameters, char *psageosvg);
 void setpsaqrytxt(void *parameters, char *psaqrytxt);
 

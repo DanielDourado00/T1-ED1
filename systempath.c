@@ -171,15 +171,64 @@ void printPath(void *parameters)
     printf("\nNome do arquivo geo: %s", getnamegeo(parameters));
     printf("\nNome do arquivo geo sem extensao: %s", getnamegeoExt(parameters));
     printf("\nPath completo do arquivo geo: %s", getgeofullpath(parameters));
-    
+
     printf("\n==========PRINTS DE DEBUGAR QRY==========\n");
     printf("\nDiretorio completo do arquivo qry: %s", getqryfullpath(parameters));
     printf("\nNome do arquivo qry: %s", getnameqry(parameters));
     printf("\nNome do arquivo qry sem extensao: %s", getnameqryExt(parameters));
-   
+
     printf("\n==========PRINTS PARA DEBUGAR O SVG==========\n");
     printf("\nPath de saida do arquivo geo.svg (psageosvg): %s", getpsageosvg(parameters));
     printf("\nPath de saida do arquivo qry.txt (psaqrytxt): %s", getpsaqrytxt(parameters));
     printf("\nPath de saida do arquivo qry.svg (psageosvg): %s", getpsageosvg(parameters));
-    
+}
+
+/*
+
+ receber parametros e fazer a verificacao entre -f -q -o -e
+
+-e path Diretório-base de entrada ($DIR_ENTRADA)
+-f arq.geo Arquivo com a descrição da cidade. Este arquivo deve estar sob o diretório $DIR_ENTRADA.
+-o path  Diretório-base de saída ($DIR_SAIDA)
+-q arqcons.qry  Arquivo com consultas. Este arquivo deve estar sob o diretório $DIR_ENTRADA.
+
+*/
+
+int readParam(int argc, char **argv, void *parameters)
+{
+    // setar tudo como falso
+    bool read_pea = false, read_psa = false, read_geo = false, read_qry = false; // flags para verificar se os parametros foram passados sendo pea = -e, psa = -o, geo = -f, qry = -q
+
+    char *normPath;
+    int len;
+
+    int opt;
+    while ((opt = getopt(argc, argv, "e:f:o:q:")) != -1)
+    {
+        switch (opt)
+        {
+        case 'e':
+            char *pea = calloc(strlen(optarg) + 1, sizeof(char));
+            strcpy(pea, optarg);
+            len = strlen(pea);
+            normPath = "";
+            normalizePath(pea, normPath, len);
+            setpea(parameters, normPath);
+
+        case 'f': 
+            char* namegeo = calloc(strlen(optarg) + 1, sizeof(char));
+            char* namegeoExt = calloc(strlen(optarg) + 1, sizeof(char));
+            char *ext = ".geo";
+            if (!getpea(parameters))
+            {
+                char* pea = calloc(4 + 1, sizeof(char)); //seria 3 mas tem que colocar o \0
+                strcpy(pea, "./");
+                setpea(parameters, pea);
+            }
+            read_geo = true;
+            strcpy(namegeo, optarg);
+
+            char* getgeofullpath = calloc(strlen(getpea(parameters)) + strlen(namegeo) + 1, sizeof(char));
+        }
+    }
 }

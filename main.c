@@ -2,13 +2,15 @@
 #include "biblioteca.h"
 #include "fila.h"
 #include "svg.h"
+#include "systempath.h"
+#include "geo.h"
 
 
 int main(int argc, char **argv)
 {
   // Primeiro: Receber parametros e salvar em um tipo abstrato de dados
 
-  Path parameters = createParameters(); // Cria um tipo abstrato de dados para armazenar os parametros    //vai para parameters.h
+  Path parameters = createParameters(); // Cria um tipo abstrato de dados para armazenar os parametros, para alocar memoria para essa tad
   if (readParam(argc, argv, parameters) == -1){                                    //vai para parameters.c
     return 0;
   }else{
