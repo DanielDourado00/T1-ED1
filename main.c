@@ -1,5 +1,8 @@
 #include "parameters.h"
 #include "biblioteca.h"
+#include "fila.h"
+#include "svg.h"
+
 
 int main(int argc, char **argv)
 {
