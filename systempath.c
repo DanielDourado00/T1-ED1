@@ -16,12 +16,22 @@ typedef struct all_paths
     char *nameqry;     // nome do arquivo qry
     char *nameqryExt;  // nome do arquivo .qry sem extensao
     char *psageosvg;   // path de saida do arquivo geo.svg
+    char *psaqrysvg;   // path de saida do arquivo qry.svg
     char *psaqrytxt;   // path de saida do arquivo qry.txt
-    char *psaqeytxt;   // path de saida do arquivo qry.txt
     char *qryfullpath; // path completo do arquivo qry
     char *geofullpath; // path completo do arquivo geo
 } all_paths;
 
+char *VerifDiretorio(char *diretorio)
+{ // verifica se o diretorio termina com /, se nao terminar, adiciona
+    if (diretorio[strlen(diretorio) - 1] != '/')
+    {
+        strcat(diretorio, "/");
+        return diretorio;
+    }
+    else
+        return diretorio;
+}
 void freeparameters(void *parameters)
 {
     all_paths *aux = parameters; // cast para all_paths / libera memoria alocada para cada path
@@ -32,7 +42,7 @@ void freeparameters(void *parameters)
     free(aux->nameqry);
     free(aux->nameqryExt);
     free(aux->psageosvg);
-    free(aux->psaqeytxt);
+    free(aux->psaqrysvg);
     free(aux->qryfullpath);
     free(aux->geofullpath);
     free(parameters); // libera memoria alocada para a struct all_paths
@@ -203,23 +213,23 @@ int readParam(int argc, char **argv, void *parameters)
     int len;
 
     int opt;
-    while ((opt = getopt(argc, argv, "e:f:o:q:")) != -1)
+    while ((opt = getopt(argc, argv, "e:f:o:q:")) != -1) // se caso algum dos parametros que entrrar forem -e -f -o -q 
     {
         switch (opt)
         {
-        case 'e':
-            char *pea = calloc(strlen(optarg) + 1, sizeof(char));
+        case 'e':                                                                   // -e path Diretório-base de entrada ($DIR_ENTRADA)
+            char *pea = calloc(strlen(optarg) + 1, sizeof(char));                   // aloca o tamanho do pea
             strcpy(pea, optarg);
-            len = strlen(pea);
+            len = strlen(pea);                                                      // pega o tamanho do pea
             normPath = "";
-            normalizePath(pea, normPath, len);
-            setpea(parameters, normPath);
+            normalizePath(pea, normPath, len);                                      // envia para a funcao normalizePath para normalizar o path do parameters.c
+            setpea(parameters, normPath);                                           // seta o pea
 
-        case 'f': // -f arq.geo Arquivo com a descrição da cidade. Este arquivo deve estar sob o diretório $DIR_ENTRADA.
+        case 'f':                                                                   // -f arq.geo. Este arquivo deve estar sob o diretório $DIR_ENTRADA.
             char *namegeo = calloc(strlen(optarg) + 1, sizeof(char));
             char *namegeoExt = calloc(strlen(optarg) + 1, sizeof(char));
             char *ext = ".geo";
-            if (!getpea(parameters))
+            if (!getpea(parameters))                                                // se o pea nao foi passado, seta o pea como "./"
             {
                 char *pea = calloc(4 + 1, sizeof(char)); // seria 3 mas tem que colocar o \0
                 strcpy(pea, "./");
@@ -237,17 +247,17 @@ int readParam(int argc, char **argv, void *parameters)
                 namegeoExt[strlen(namegeoExt) - 4] = '\0'; // se tiver, remove a extensao sendo namegeoExt = nome do arquivo geo sem extensao
                 joinAll(getpea(parameters), namegeo, ext, getgeofullpath, len);
 
-                setnamegeo(parameters, namegeo);                //envia o nome do arquivo geo para a tad parameters
-                setnamegeoExt(parameters, namegeoExt);          //envia o nome do arquivo geo sem extensao para a tad parameters
-                setgeofullpath(parameters, getgeofullpath);     //envia o path completo do arquivo geo para a tad parameters
+                setnamegeo(parameters, namegeo);            // envia o nome do arquivo geo para a tad parameters
+                setnamegeoExt(parameters, namegeoExt);      // envia o nome do arquivo geo sem extensao para a tad parameters
+                setgeofullpath(parameters, getgeofullpath); // envia o path completo do arquivo geo para a tad parameters
                 break;
             }
-        case 'o': // -o path  Diretório-base de saída ($DIR_SAIDA)
-            char *psa = calloc(strlen(optarg) + 2, sizeof(char));       // aloca memoria para o path de saida
-            strcpy(psa, optarg);                                        // copia o path de saida para a variavel psa
-            read_psa = true;                                            // seta a flag de path de saida como verdadeira
-            normalizePath(psa, normPath, len);                          // normaliza o path de saida para ser usada na tad parameters
-            setpsa(parameters, psa);                                    // seta o path de saida
+        case 'o':                                                 // -o path  Diretório-base de saída ($DIR_SAIDA)
+            char *psa = calloc(strlen(optarg) + 2, sizeof(char)); // aloca memoria para o path de saida
+            strcpy(psa, optarg);                                  // copia o path de saida para a variavel psa
+            read_psa = true;                                      // seta a flag de path de saida como verdadeira
+            normalizePath(psa, normPath, len);                    // normaliza o path de saida para ser usada na tad parameters
+            setpsa(parameters, psa);                              // seta o path de saida
             break;
 
         case 'q':                                                        // -q arqcons.qry  Arquivo com consultas. Este arquivo deve estar sob o diretório $DIR_ENTRADA.
@@ -259,17 +269,70 @@ int readParam(int argc, char **argv, void *parameters)
                 strcpy(pea, "./");
                 setpea(parameters, pea);
             }
-            read_qry = true;    
-            strcpy(nameqry, optarg); // copia o nome do arquivo qry para o nome do arquivo qry com extensao   
-            char*  qryfullpath = calloc(strlen(getpea(parameters)) + strlen(nameqry) + 1, sizeof(char)); // aloca memoria para o path completo do arquivo qry
+            read_qry = true;
+            strcpy(nameqry, optarg);                                                                    // copia o nome do arquivo qry para o nome do arquivo qry com extensao
+            char *qryfullpath = calloc(strlen(getpea(parameters)) + strlen(nameqry) + 1, sizeof(char)); // aloca memoria para o path completo do arquivo qry
 
             joinFilePath(getpea(parameters), nameqry, qryfullpath, len); // junta o path de entrada com o nome do arquivo qry para formar o path completo do arquivo qry
-            while (nameqry, '/') // verifica se o nome do arquivo qry tem barra
+            while (nameqry, '/')                                         // verifica se o nome do arquivo qry tem barra
             {
-             nameqry = strrchr(nameqry, '/') + 1; // se tiver, pega o nome do arquivo qry sem a barra, a funcao strrchr retorna o ultimo caractere da string, lendo ele de tras pra frente
-            strcpy (nameqryExt, nameqry); // copia o nome do arquivo qry sem a barra para o nome do arquivo qry sem extensao
+                nameqry = strrchr(nameqry, '/') + 1; // se tiver, pega o nome do arquivo qry sem a barra, a funcao strrchr retorna o ultimo caractere da string, lendo ele de tras pra frente
+                strcpy(nameqryExt, nameqry);         // copia o nome do arquivo qry sem a barra para o nome do arquivo qry sem extensao
             }
-            
+            if (nameqry[strlen(nameqry) - 4] == '.') // verifica se o nome do arquivo qry tem extensao
+            {
+                nameqryExt[strlen(nameqryExt) - 4] = '\0'; // se tiver, remove a extensao sendo nameqryExt = nome do arquivo qry sem extensao
+                setnameqry(parameters, nameqry);           // envia o nome do arquivo qry para a tad parameters
+                setnameqryExt(parameters, nameqryExt);     // envia o nome do arquivo qry sem extensao para a tad parameters
+                setqryfullpath(parameters, qryfullpath);   // envia o path completo do arquivo qry para a tad parameters
+                break;
+            }
+        default:
+            printf("Parametro invalido");
+            return -1;
         }
     }
+
+    if (read_geo && read_psa)
+    {                                                                                                               // verifica se os parametros do geo.svg  a saida foram passados
+        char *psageosvg = calloc(strlen(getpsa(parameters)) + strlen(getnamegeoExt(parameters)) + 5, sizeof(char)); // aloca memoria para o path do geo.svg
+        strcpy(psageosvg, getpsa(parameters));                                                                      // copia o path de saida para o path do geo.svg
+        VerifDiretorio(psageosvg);                                                                                  // verifica se o diretorio existe, se nao existir, cria
+        strcat(psageosvg, getnamegeoExt(parameters));
+        strcat(psageosvg, ".svg");           // concatena o nome do arquivo geo sem extensao com o path do geo.svg
+        setpsageosvg(parameters, psageosvg); // envia o path do geo.svg para a tad parameters
+    }
+    else if (!read_geo || !read_psa)
+    {
+        printf("Parametros invalidos");
+        return -1;
+    }
+
+    if (!read_qry || !read_psa)
+    {
+        printf("Parametros invalidos");
+        return -1;
+    }
+    if (read_qry && read_psa) // verifica se os parametros do qry.svg e da saida foram passados
+    {
+        char *psaqrysvg = calloc(strlen(getpsa(parameters)) + strlen(getnameqryExt(parameters)) + 5, sizeof(char)); // aloca memoria para o path do qry.svg
+        char *psaqrytxt = calloc(strlen(getpsa(parameters)) + strlen(getnameqryExt(parameters)) + 5, sizeof(char)); // aloca memoria para o path do qry.txt
+        strcpy(psaqrysvg, getpsa(parameters));                                                                      // copia o path de saida para o path do qry.svg
+        VerifDiretorio(psaqrysvg);                                                                                  // verifica se o diretorio existe, se nao existir, cria
+        strcat(psaqrysvg, getnameqryExt(parameters));                                                               // concatena o nome do arquivo qry sem extensao com o path do qry.svg
+        strcat(psaqrysvg, "_");                                                                                     // concatena o nome do arquivo qry sem extensao com o path do qry.svg
+        strcat(psaqrysvg, getnameqry(parameters));                                                                  // concatena o nome do arquivo qry sem extensao com o path do qry.svg
+
+        if (psaqrysvg[strlen(psaqrysvg) - 4] == '.') // verifica se o nome do arquivo qry tem extensao
+
+            psaqrysvg[strlen(psaqrysvg) - 4] = '\0'; // se tiver, remove a extensao sendo nameqryExt = nome do arquivo qry sem extensao
+        setpsaqrysvg(parameters, psaqrysvg);         // envia o path do qry.svg para a tad parameters
+
+        strcpy(psaqrytxt, psaqrysvg);        // copia o path de saida para o path do qry.txt
+        strcat(psaqrytxt, ".txt");           // concatena o nome do arquivo qry sem extensao com o path do qry.txt
+        strcat(psaqrysvg, ".svg");           // concatena o nome do arquivo qry sem extensao com o path do qry.svg
+        setpsageosvg(parameters, psaqrysvg); // envia o path do geo.svg para a tad parameters
+        setpsaqrytxt(parameters, psaqrytxt); // envia o path do qry.txt para a tad parameters
+    }
+    return 0;
 }

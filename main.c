@@ -10,11 +10,15 @@ int main(int argc, char **argv)
 {
   // Primeiro: Receber parametros e salvar em um tipo abstrato de dados
 
-  Path parameters = createParameters(); // Cria um tipo abstrato de dados para armazenar os parametros, para alocar memoria para essa tad
-  if (readParam(argc, argv, parameters) == -1){                                    //vai para parameters.c
+  Path parameters = createParameters(); // vai para systempath.c alocar espaço para struct all_paths
+
+  if (readParam(argc, argv, parameters) == -1){                                    // vai para systempath.c 
     return 0;
   }else{
     printf("Erro ao ler os parametros\n");
   return -1;
   }
+
+
+  
 }

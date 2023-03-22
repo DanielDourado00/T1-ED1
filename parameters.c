@@ -29,7 +29,7 @@ void splitPath(char *fullPath, char *path, int lenPath, char *nomeArq, int lenNo
     }
 }
 
-void joinFilePath(char *path, char *fileName, char *fullPath, int lenFullPath)      /tratado no systempath, recebe o parameters, o nameqry, o qryfullpath e len; 
+void joinFilePath(char *path, char *fileName, char *fullPath, int lenFullPath)      //tratado no systempath, recebe o parameters, o nameqry, o qryfullpath e len; 
 {
     if (path[strlen(path) - 1] == '/') // Verifica se a string tem uma barra (auxiliar na concatenação)
     {
