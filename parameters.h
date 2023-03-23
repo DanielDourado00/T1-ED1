@@ -1,8 +1,7 @@
-#include "biblioteca.h"
-
 #ifndef PATH__
 #define PATH__
 
+#include "biblioteca.h"
 /*
    Este modulo prove funcoes para manipulacao de caminhos de arquivos.
    Basicamente, exitem 2 tipos de funcoes:

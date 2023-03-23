@@ -35,6 +35,7 @@
   ],
   "C_Cpp_Runner.useAddressSanitizer": false,
   "files.associations": {
-    "systempath.h": "c"
+    "systempath.h": "c",
+    "biblioteca.h": "c"
   }
 }

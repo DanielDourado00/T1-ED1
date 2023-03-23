@@ -1,3 +1,9 @@
+#ifndef BIBLIOTECA_H
+#define BIBLIOTECA_H
+
+#include "biblioteca.h"
+#include "parameters.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -5,8 +11,8 @@
 #include <unistd.h>
 #include <getopt.h>
 #include <math.h>
-
-#ifndef BIBLIOTECA_H
-#define BIBLIOTECA_H
+#include <time.h>
+#include <sys/stat.h>
+#include <stdbool.h>
 
 #endif
