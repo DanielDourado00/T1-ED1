@@ -1,45 +1,20 @@
-#Make file do siguel
+EXEC = gcc
+CFLAGS = -std=c99 -fstack-protector-all -g
+PROJECT_NAME = ted
 
-# Nome do arquivo final
-PROJ_NAME=ted
+clear:
+	rm *.o
+	rm $(PROJECT_NAME)
+	rm *.gch
 
-#arquivos .c
-C_SOURCE=$(wildcard *.c)
+$(PROJECT_NAME): lista.o main.c parameters.o systempath.o
+	$(EXEC) $(CFLAGS) lista.o main.c parameters.o systempath.o -o $(PROJECT_NAME) -lm
 
-#arquivos .h
-H_SOURCE=$(wildcard *.h)
+lista.o: lista.c lista.h
+	$(EXEC) $(CFLAGS) -c lista.c
 
-#arquivos .o
-OBJ=$(C_SOURCE: .c=.o)
+parameters.o: parameters.c parameters.h
+	$(EXEC) $(CFLAGS) -c parameters.c
 
-#compilador
-
-CC=gcc
-
-#flags de compilação
-CC_FLAGS=-c         \
-		 -g         \
-		 -w         \
-         -W         \
-         -Wall      \
-	 -std=c99	\
-	 -fstack-protector-all
-
-
-#
-#Compila e linka os arquivos
-#
-ted: $(PROJ_NAME)
-
-$(PROJ_NAME): $(OBJ)
-	$(CC) -o #@ $^ -lm
-
-%.o: %.c %.h
-
-	$(CC) -o $@ $< $(CC_FLAGS)
- 
-main: main.c $(H_SOURCE)
-	$(CC) -o $@ $< $(CC_FLAGS)
- 
-clean:
-	rm -rf *.o $(PROJ_NAME) *~
+systempath.o: systempath.c systempath.h
+	$(EXEC) $(CFLAGS) -c systempath.c

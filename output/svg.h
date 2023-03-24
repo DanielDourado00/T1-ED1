@@ -3,5 +3,6 @@
 
 #include "biblioteca.h"
 
+void printSVG(void* Lista, char* file);
 
 #endif

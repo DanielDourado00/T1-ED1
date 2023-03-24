@@ -8,8 +8,11 @@
 /* Vai ler os pareametros, é necessario colocar no systempath.h e linkar na main para que a main acesse o systempath.c */
 int readParam(int argc, char **argv, void *parameters);
 
-void *createParameters();
-void freeparameters(void *parameters);
+typedef void* Path;          // será usado no .c path para alocar memoria.
+Path createParameters();    // vai para parameters.c
+void printarpath(Path parameters); //funcao para printar o path
+char* getpath(Path parameters); //funcao para pegar o path
+void freeParameters(Path parameters); //
 
 /* sets e gets na ordem do systempath.c */
 void setgeofullpath(void *parameters, char *geofull);

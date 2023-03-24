@@ -1,10 +1,5 @@
 #include "systempath.h"
 
-void *createParameters()
-{
-    all_paths *aux = calloc(1, sizeof(all_paths)); // aloca memoria para a struct all_paths e retorna o ponteiro para aux
-    return aux;
-}
 
 typedef struct all_paths
 { // struct para guardar todos os paths
@@ -21,6 +16,12 @@ typedef struct all_paths
     char *qryfullpath; // path completo do arquivo qry
     char *geofullpath; // path completo do arquivo geo
 } all_paths;
+
+void *createParameters()
+{
+    all_paths *aux = calloc(1, sizeof(all_paths)); // aloca memoria para a struct all_paths e retorna o ponteiro para aux
+    return aux;
+}
 
 char *VerifDiretorio(char *diretorio)
 { // verifica se o diretorio termina com /, se nao terminar, adiciona
@@ -326,7 +327,7 @@ int readParam(int argc, char **argv, void *parameters)
         if (psaqrysvg[strlen(psaqrysvg) - 4] == '.') // verifica se o nome do arquivo qry tem extensao
 
             psaqrysvg[strlen(psaqrysvg) - 4] = '\0'; // se tiver, remove a extensao sendo nameqryExt = nome do arquivo qry sem extensao
-        setpsaqrysvg(parameters, psaqrysvg);         // envia o path do qry.svg para a tad parameters
+        setpsageosvg(parameters, psaqrysvg);         // envia o path do qry.svg para a tad parameters
 
         strcpy(psaqrytxt, psaqrysvg);        // copia o path de saida para o path do qry.txt
         strcat(psaqrytxt, ".txt");           // concatena o nome do arquivo qry sem extensao com o path do qry.txt

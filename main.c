@@ -1,9 +1,8 @@
 #include "parameters.h"
 #include "biblioteca.h"
 #include "lista.h"
-#include "svg.h"
 #include "systempath.h"
-#include "geo.h"
+#include "svg.h"
 
 
 int main(int argc, char **argv)
