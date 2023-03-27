@@ -1,5 +1,8 @@
 #include "systemgeo.h"
 #include "systempath.h"
+#include "lista.h"
+#include "circ.h"
+
 
 /* ============================== ler informacoes das formas para salvar na lista ==============================*/
 
@@ -23,8 +26,8 @@ void ReadGeo(void *lista, void *parameters)
         switch (tipo[0])
         {
         case 'c':                                                        // se for circulo
-            fscanf(arqgeo, "%lf %lf %lf %s %s", &r, &x, &y, corb, corp); // le as informacoes do circulo
-            novaforma = createCircle(r, x, y, corb, corp);               // cria uma nova forma do tipo circulo, vai para a ted de forma circular
+            fscanf(arqgeo, "%lf %lf %lf %s %s", &id, &x, &y, &r, &corb, &corp); // le as informacoes do circulo
+            novaforma = createCircle(id, x, y, r, corb, corp);                 // cria uma nova forma do tipo circulo
             insert(List, novaforma);                                     // insere a nova forma na lista
             break;
 
