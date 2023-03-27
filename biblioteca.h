@@ -1,9 +1,6 @@
 #ifndef BIBLIOTECA_H
 #define BIBLIOTECA_H
 
-#include "biblioteca.h"
-#include "parameters.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>

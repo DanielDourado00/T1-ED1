@@ -1,6 +1,5 @@
 #include "systempath.h"
 
-
 typedef struct all_paths
 { // struct para guardar todos os paths
 
@@ -214,23 +213,23 @@ int readParam(int argc, char **argv, void *parameters)
     int len;
 
     int opt;
-    while ((opt = getopt(argc, argv, "e:f:o:q:")) != -1) // se caso algum dos parametros que entrrar forem -e -f -o -q 
+    while ((opt = getopt(argc, argv, "e:f:o:q:")) != -1) // se caso algum dos parametros que entrrar forem -e -f -o -q
     {
         switch (opt)
         {
-        case 'e':                                                                   // -e path Diretório-base de entrada ($DIR_ENTRADA)
-            char *pea = calloc(strlen(optarg) + 1, sizeof(char));                   // aloca o tamanho do pea
+        case 'e':                                                 // -e path Diretório-base de entrada ($DIR_ENTRADA)
+            char *pea = calloc(strlen(optarg) + 1, sizeof(char)); // aloca o tamanho do pea
             strcpy(pea, optarg);
-            len = strlen(pea);                                                      // pega o tamanho do pea
+            len = strlen(pea); // pega o tamanho do pea
             normPath = "";
-            normalizePath(pea, normPath, len);                                      // envia para a funcao normalizePath para normalizar o path do parameters.c
-            setpea(parameters, normPath);                                           // seta o pea
+            normalizePath(pea, normPath, len); // envia para a funcao normalizePath para normalizar o path do parameters.c
+            setpea(parameters, normPath);      // seta o pea
 
-        case 'f':                                                                   // -f arq.geo. Este arquivo deve estar sob o diretório $DIR_ENTRADA.
+        case 'f': // -f arq.geo. Este arquivo deve estar sob o diretório $DIR_ENTRADA.
             char *namegeo = calloc(strlen(optarg) + 1, sizeof(char));
             char *namegeoExt = calloc(strlen(optarg) + 1, sizeof(char));
             char *ext = ".geo";
-            if (!getpea(parameters))                                                // se o pea nao foi passado, seta o pea como "./"
+            if (!getpea(parameters)) // se o pea nao foi passado, seta o pea como "./"
             {
                 char *pea = calloc(4 + 1, sizeof(char)); // seria 3 mas tem que colocar o \0
                 strcpy(pea, "./");

@@ -2,7 +2,10 @@
 #include "biblioteca.h"
 #include "lista.h"
 #include "systempath.h"
-#include "svg.h"
+#include "systemgeo.h"
+#include "circ.h"
+
+
 
 
 int main(int argc, char **argv)
@@ -18,6 +21,8 @@ int main(int argc, char **argv)
   return -1;
   }
 
-
+  // criar uma lista
+  Lista list = createLst(-1); // vai para lista.c alocar espaço para struct list, p valor da capacidade é -1 pq não tem limite de elementos na lista
+  ReadGeo(list, parameters); //le o .geo
 
 }
