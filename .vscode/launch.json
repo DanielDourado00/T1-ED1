@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/dourado/projetoED/T1-ED1",
-      "program": "/home/dourado/projetoED/T1-ED1/build/Debug/outDebug",
+      "cwd": "/home/dourado/projetoED/T1ED1",
+      "program": "/home/dourado/projetoED/T1ED1/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

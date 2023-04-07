@@ -1,0 +1,1 @@
+valgrind ./ted -e ./testes -f t001.geo -o ./alunos/aluno1/o/ -q ./q1.qry

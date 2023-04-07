@@ -1,106 +1,116 @@
 #include "parameters.h"
-
+#include "systempath.h"
+#include "systemgeo.h"
 
 void splitPath(char *fullPath, char *path, int lenPath, char *nomeArq, int lenNomeArq, char *extArq, int lenExtArq)
 {
-    char *barra = strrchr(fullPath, '/'); // Pega o ultimo caractere '/' da string
-    char *ponto = strrchr(fullPath, '.'); // Pega o ultimo caractere '.' da string
-    if (barra != NULL)                    // Verifica se a string tem uma barra
-    {
-        strncpy(path, fullPath, fullPath - barra); // Copia a string ate a barra
-        path[fullPath - barra] = '\0';             // Adiciona um caractere nulo no final da string
-        char *pathENome;                           // Cria uma string para armazenar o nome do arquivo
-        strcpy(pathENome, barra + 1);              // Copia a string a partir da barra
-        nomeArq = strtok(pathENome, ".");          // Separa a string em duas, a partir do ponto
-        strcpy(extArq, ponto + 1);                 // Copia a string a partir do ponto
-    }
-    else if (ponto != NULL) // Verifica se a string tem um ponto
-    {
-        strncpy(nomeArq, fullPath, fullPath - ponto); // Copia a string ate o ponto
-        nomeArq[fullPath - ponto] = '\0';             // Adiciona um caractere nulo no final da string
-        strcpy(extArq, ponto + 1);                    // Copia a string a partir do ponto
-        strcpy(path, "");                             // Copia uma string vazia para o path
+
+    if (strchr(fullPath, '/'))
+    { // se tiver barra (completo)
+        path = realloc(path, strlen(fullPath));
+        strcpy(path, fullPath);
+        if (strchr(path, '.'))
+        {
+            path[strlen(path) - 4] = '\0';
+        }
+        nomeArq = strrchr(fullPath, '/') + 1;
+        if (strchr(nomeArq, '.'))
+        {
+            extArq = strrchr(nomeArq, '.');
+            nomeArq[strlen(nomeArq) - 4] = '\0';
+        }
+        else
+        {
+            extArq = "";
+        }
+        return;
     }
     else
-    {
-        strcpy(nomeArq, fullPath); // Copia a string para o nome do arquivo
-        strcpy(extArq, "");        // Copia uma string vazia para a extensao do arquivo
-        strcpy(path, "");          // Copia uma string vazia para o path
+    { // se nao tiver barra (so o nome)
+        path = "";
+        if (strchr(fullPath, '.'))
+        {
+            nomeArq = fullPath;
+            nomeArq[strlen(nomeArq) - 4] = '\0';
+            extArq = strrchr(fullPath, '.');
+        }
+        else
+        {
+            nomeArq = fullPath;
+            extArq = "";
+        }
+        return;
     }
+    return;
 }
 
-void joinFilePath(char *path, char *fileName, char *fullPath, int lenFullPath)      //tratado no systempath, recebe o parameters, o nameqry, o qryfullpath e len; 
-{
-    if (path[strlen(path) - 1] == '/') // Verifica se a string tem uma barra (auxiliar na concatenação)
-    {
-        strcpy(fullPath, path);        // Copia a string para o nome do arquivo FULL
-        strcat(fullPath, "/");         // Se tiver, coloca um caractere nulo no final da string
-        strcat(fullPath, fileName);    // Concatena a string com o nome do arquivo
-        return;
-    }else if (path[strlen(path) - 1] != '/'){       // Verifica se a string tem uma barra (auxiliar na concatenação)
-        strcat(fullPath, fileName);    // Concatena a string com o nome do arquivo
+void joinFilePath(char *path, char *fileName, char *fullPath, int lenFullPath){
+    
+    if(strchr(path, '/')){ //se tiver barra (completo)
+    strcpy(fullPath, path);
+    strcat(fullPath, "/");
+    strcat(fullPath, fileName);
+    return;
+    }   else{ //se nao tiver barra (so o nome)
+        strcpy(fullPath, fileName);
         return;
     }
-    
+    //printf("\n\nconteudo do fullpath na tad parameters.c, funcao joinFilePath linha 58: %s \n\n", fullPath);
 }
 
 void joinAll(char *path, char *fileName, char *ext, char *fullPath, int lenfullPath)
 {
-    strcpy(fullPath, path);                             // Copia a string para o nome do arquivo FULL
-    if (fullPath[strlen(fullPath) - 1] != '/')          // Verifica se a string tem uma barra (auxiliar na concatenação)
-    {
-        strcat(fullPath, "/");                          // Se tiver, coloca um caractere nulo no final da string
+
+    strcpy(fullPath, path);
+
+    if (fullPath[strlen(fullPath) - 1] != '/')
+    { // coloca barra se nao tiver
+        strcat(fullPath, "/");
     }
-    {
-        strcat(fullPath, fileName);
-        strcat(fullPath, ext);
-    }
-    
+    strcat(fullPath, fileName);
+    strcat(fullPath, ext);
+    //printf("\n\nconteudo do fullpath na tad parameters.c, funcao joinAll linha 61: %s \n\n", fullPath);
 }
 
 void getFileName(char *fullPath, char *fileName, char *lenFileName)
 {
-
-    char *ponto = strrchr(fullPath, '/');       // Pega o ultimo caractere '/' da string
-
-    if (ponto == NULL)
-    {
-        strcpy(fileName, fullPath);
+    if (strchr(fullPath, '/'))
+    { // se tiver barra (completo)
+        fileName = strrchr(fullPath, '/') + 1;
         return;
     }
     else
-    {
-        strcpy(fileName, ponto + 1);
+    { // se nao tiver barra (so o nome)
+        fileName = fullPath;
         return;
     }
+    printf("\n\nconteudo de fileName do parameters.c: %s \n\n", fileName);
 }
 
 void getPath(char *fullPath, char *path, int lenPath)
 {
-    path = realloc(path, sizeof(char) * (strlen(fullPath) + 1)); // Alocando memoria para path
-    strcpy(path, fullPath);                                      // copiando o conteudo de fullPath para path
-    if (strrchr(path, '/') != NULL)                              // Verifica se a string tem uma barra
+    path = realloc(path, strlen(fullPath));
+    strcpy(path, fullPath);
+
+    if (strchr(path, '/'))
     {
-        *(strrchr(path, '/') + 1) = '\0'; // Se tiver, coloca um caractere nulo no final da string
+        *(strrchr(path, '/') + 1) = '\0'; // tira o nome do arquivo
     }
     else
-    {
-        strcpy(path, ""); // Se não tiver, copia uma string vazia para o path
-    }
+        path = "";
+    printf("\n\n conteudo de path do parameters.c: %s \n\n", path);
 }
 
-void normalizePath(char *path, char *normPath, int lenNormPath)
-{
-
-    int ult = strlen(path) - 1; // Pega o tamanho da string
-    if (path[ult] == '/')
-    {                    // Verifica se o ultimo caractere é uma barra
-        normPath = path; // Se for, copia a string para a string normalizada
-        return;
+void normalizePath(char *path, char *normPath, int lenNormPath){
+    
+    if (path[strlen(path)-1] != '/'){ //se não tem "/" retorna
+      normPath = path;
+      return;
     }
-    else
-    {
-        normPath = path;
-        *(path + strlen(path) - 1) = '\0'; // se tem "/" retira
+    else{
+    normPath = path;
+    *(path + strlen( path )-1)  = '\0';// se tem "/" retira
+    return;
     }
+    printf("\n\nconteudo de normPath do parameters.c: %s \n\n", normPath);
 }

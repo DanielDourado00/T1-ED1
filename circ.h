@@ -25,6 +25,6 @@ void setcorpCirc(void *bião, char *corp);
 
 /* criacao de circulo */
 
-void* createCircle (int *id, double x, double y, double r, char *corb, char *corp);
+void* createCircle (int id, double x, double y, double r, char *corb, char *corp);
 
 #endif
