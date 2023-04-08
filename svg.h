@@ -2,7 +2,7 @@
 #ifndef SVG_H
 #define SVG_H
 
-void printSvg(void* list, void *arquivo);
+void printSvg(void* list, char *arquivo);
 
 
 #endif
