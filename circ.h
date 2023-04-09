@@ -27,7 +27,6 @@ void setcorpCirc(void *bião, char *corp);
 /* tamanho da memoria */
 /* limpeza dele */
 void* createCircle (int id, double x, double y, double r, char *corb, char *corp);
-void* memoriacirc();
 void freeCircle (void *biao);
 
 #endif

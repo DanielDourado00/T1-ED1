@@ -4,6 +4,7 @@
 #include "systemgeo.h"
 #include "systempath.h"
 #include "retangulo.h"
+#include "linha.h"
 
 typedef struct Lista Plist;
 typedef struct Posic Pposic;

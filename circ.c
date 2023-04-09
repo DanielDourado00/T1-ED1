@@ -1,6 +1,5 @@
 #include "circ.h"
 
-/* Faltam colocar as informacoes nessecarias para o qry */
 
 typedef struct circ
 {
@@ -142,10 +141,6 @@ void* createCircle (int id, double x, double y, double r, char *corb, char *corp
     return circulo;                                                                         // retorna o circulo
 }
 
-void* memoriacirc(){                            //callocdata
-    Circ *circulo = calloc(1, sizeof(Circ));                                                // aloca espaço para a struct circulo
-    return circulo;
-}
 
 void freeCircle (void *biao){                                                               // funcao para dar free no circulo
     Circ *forma = biao;                                                                      // cria um ponteiro para a struct circulo

@@ -1,6 +1,7 @@
 #include "svg.h"
 #include "circ.h"
 #include "retangulo.h"
+#include "linha.h"
 #include "lista.h"
 #include "systempath.h"
 #include "systemgeo.h"
@@ -60,6 +61,17 @@ void printSvg(void *list, char *arquivo)
             corb = getRetanguloCorb(auxform);
             corp = getRetanguloCorp(auxform);
             fprintf(svg, "<rect id=\"%d\" x=\"%lf\" y=\"%lf\" width=\"%lf\" height=\"%lf\" stroke=\"%s\" stroke-width=\"1\" fill=\"%s\" />\n", id, x, y, w, h, corb, corp);
+            fflush(svg);
+            break;
+        case 'l':
+            auxform = getLst(list, no);
+            id = getLinhaId(auxform);
+            x = getLinhaX1(auxform);
+            x2 = getLinhaX2(auxform);
+            y = getLinhaY1(auxform);
+            y2 = getLinhaY2(auxform);
+            cor = getLinhaCor(auxform);
+            fprintf(svg, "<line id=\"%d\" x1=\"%lf\" y1=\"%lf\" x2=\"%lf\" y2=\"%lf\" stroke=\"%s\" stroke-width=\"1\" />\n", id, x, y, x2, y2, cor);
             fflush(svg);
             break;
         }

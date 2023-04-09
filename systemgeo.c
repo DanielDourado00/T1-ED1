@@ -3,6 +3,7 @@
 #include "lista.h"
 #include "circ.h"
 #include "retangulo.h"
+#include "linha.h"
 
 /* ============================== ler informacoes das formas para salvar na lista ==============================*/
 
@@ -44,6 +45,12 @@ void ReadGeo(void *lista, void *parameters)
             novaforma = createRetangulo(id, x, y, w, h, corb, corp);                     // cria o retangulo                                                                           /*             novaforma = createNode(novaforma); // cria um no para o retangulo                                                                               */
             insertLst(lista, novaforma);                                                 // insere o no na lista
         }
+        else if (!strcmp(tipo, "l"))
+        {
+            fscanf(peageo, "%d %lf %lf %lf %lf %s", &id, &x, &y, &x2, &y2, cor); // le as informacoes da linha
+            novaforma = createLinha(id, x, y, x2, y2, cor);                      // cria a linha
+            insertLst(lista, novaforma);                                                                     /*             novaforma = createNode(novaforma); // cria um no para a linha                                                                               */
+        }
 
         strcpy(tipo, " "); // limpa a variavel tipo
     }
@@ -62,6 +69,10 @@ char checkForm(void *forma)
     else if (checkRetangulo(aux) == true)
     {
         return 'r';
+    }
+    else if (checkLinha(aux) == true)
+    {
+        return 'l';
     }
     return ' ';
 }
