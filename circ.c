@@ -15,20 +15,54 @@ typedef struct circ
     /* faltam colocar o restante das informacoes para fazer as operacoes com o qry */
 } Circ;
 
-/* fazer checkagem se a forma geometrica recebida é um CIRCULO */
+/* ===========================================inicio dos sets/=========================================== */
+/* os sets vao ser usados para setar as informacoes do circulo e fazer as operacoes com o qry, segue a ordem da struct circ */
 
-bool checkCirc(void *bião)
-{
-    Circ *Circ = bião;  
-    if (Circ->tipo == 'c')
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+void settipoCirc(void *biao, char tipo)
+{                      // funcao para setar o tipo do biao
+    Circ *Circ = biao; // cria um ponteiro para a struct biao
+    Circ->tipo = tipo; // seta o tipo do biao
 }
+
+void setidCirc(void *biao, int id)
+{                      // funcao para setar o id do biao
+    Circ *Circ = biao; // cria um ponteiro para a struct biao
+    Circ->id = id;     // seta o id do biao
+}
+
+void setxCirc(void *biao, double x)
+{                      // funcao para setar a coordenada x do biao
+    Circ *Circ = biao; // cria um ponteiro para a struct biao
+    Circ->x = x;       // seta a coordenada x do biao
+}
+
+void setyCirc(void *biao, double y)
+{                      // funcao para setar a coordenada y do biao
+    Circ *Circ = biao; // cria um ponteiro para a struct biao
+    Circ->y = y;       // seta a coordenada y do biao
+}
+
+void setrCirc(void *biao, double r)
+{                      // funcao para setar o raio do biao
+    Circ *Circ = biao; // cria um ponteiro para a struct biao
+    Circ->r = r;       // seta o raio do biao
+}
+
+void setcorbCirc(void *biao, char *corb)
+{                             // funcao para setar a cor da borda do biao
+    Circ *Circ = biao;        // cria um ponteiro para a struct biao
+    strcpy(Circ->corb, corb); // seta a cor da borda do biao
+}
+
+void setcorpCirc(void *biao, char *corp)
+{                             // funcao para setar a cor de preenchimento do biao
+    Circ *Circ = biao;        // cria um ponteiro para a struct biao
+    strcpy(Circ->corp, corp); // seta a cor de preenchimento do biao
+}
+
+/* ===========================================fim dos sets/=========================================== */
+
+/* fazer checkagem se a forma geometrica recebida é um CIRCULO */
 
 
 /* ===========================================inicio dos gets/=========================================== */
@@ -80,52 +114,19 @@ char *getcorpCirc(void *bião)
 
 /* ===========================================fim dos gets/=========================================== */
 
-/* ===========================================inicio dos sets/=========================================== */
-/* os sets vao ser usados para setar as informacoes do circulo e fazer as operacoes com o qry, segue a ordem da struct circ */
+bool checkCirc(void *bião)
+{
+    Circ *Circ = bião;  
+    if (Circ->tipo == 'c' || Circ->tipo == 'C')
 
-void settipoCirc(void *biao, char tipo)
-{                      // funcao para setar o tipo do biao
-    Circ *Circ = biao; // cria um ponteiro para a struct biao
-    Circ->tipo = tipo; // seta o tipo do biao
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
-
-void setidCirc(void *biao, int id)
-{                      // funcao para setar o id do biao
-    Circ *Circ = biao; // cria um ponteiro para a struct biao
-    Circ->id = id;     // seta o id do biao
-}
-
-void setxCirc(void *biao, double x)
-{                      // funcao para setar a coordenada x do biao
-    Circ *Circ = biao; // cria um ponteiro para a struct biao
-    Circ->x = x;       // seta a coordenada x do biao
-}
-
-void setyCirc(void *biao, double y)
-{                      // funcao para setar a coordenada y do biao
-    Circ *Circ = biao; // cria um ponteiro para a struct biao
-    Circ->y = y;       // seta a coordenada y do biao
-}
-
-void setrCirc(void *biao, double r)
-{                      // funcao para setar o raio do biao
-    Circ *Circ = biao; // cria um ponteiro para a struct biao
-    Circ->r = r;       // seta o raio do biao
-}
-
-void setcorbCirc(void *biao, char *corb)
-{                             // funcao para setar a cor da borda do biao
-    Circ *Circ = biao;        // cria um ponteiro para a struct biao
-    strcpy(Circ->corb, corb); // seta a cor da borda do biao
-}
-
-void setcorpCirc(void *biao, char *corp)
-{                             // funcao para setar a cor de preenchimento do biao
-    Circ *Circ = biao;        // cria um ponteiro para a struct biao
-    strcpy(Circ->corp, corp); // seta a cor de preenchimento do biao
-}
-
-/* ===========================================fim dos sets/=========================================== */
 
 /*==========================================funcao para criar circulo e dar free==========================================*/
 

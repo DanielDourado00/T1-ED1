@@ -1,10 +1,11 @@
 #include "svg.h"
 #include "circ.h"
+#include "retangulo.h"
 #include "lista.h"
 #include "systempath.h"
 #include "systemgeo.h"
 
-typedef void* Posic;
+typedef void *Posic;
 
 void printSvg(void *list, char *arquivo)
 {
@@ -31,7 +32,6 @@ void printSvg(void *list, char *arquivo)
     fprintf(svg, "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n"); // escreve no arquivo svg a primeira linha
     printf("Arquivo svg aberto com sucesso\n\n");
 
-
     for (no = getFirstLst(list); no; no = getNextLst(list, no))
     {                                   // percorre a lista
         auxform = getLst(list, no);     // pega o elemento da lista
@@ -48,6 +48,18 @@ void printSvg(void *list, char *arquivo)
             corb = getcorbCirc(auxform);
             corp = getcorpCirc(auxform);
             fprintf(svg, "<circle id=\"%d\" cx=\"%lf\" cy=\"%lf\" r=\"%lf\" stroke=\"%s\" stroke-width=\"1\" fill-opacity=\"0.7\" fill=\"%s\" />\n", id, x, y, r, corb, corp);
+            fflush(svg);
+            break;
+        case 'r':
+            auxform = getLst(list, no);
+            id = getRetanguloId(auxform);
+            x = getRetanguloX(auxform);
+            y = getRetanguloY(auxform);
+            w = getRetanguloW(auxform);
+            h = getRetanguloH(auxform);
+            corb = getRetanguloCorb(auxform);
+            corp = getRetanguloCorp(auxform);
+            fprintf(svg, "<rect id=\"%d\" x=\"%lf\" y=\"%lf\" width=\"%lf\" height=\"%lf\" stroke=\"%s\" stroke-width=\"1\" fill=\"%s\" />\n", id, x, y, w, h, corb, corp);
             fflush(svg);
             break;
         }

@@ -3,6 +3,7 @@
 #include "circ.h"
 #include "systemgeo.h"
 #include "systempath.h"
+#include "retangulo.h"
 
 typedef struct Lista Plist;
 typedef struct Posic Pposic;

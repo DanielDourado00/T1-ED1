@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/usr/include",
-                "/usr/lib/gcc/x86_64-linux-gnu/11/include"
+                "/usr/lib/gcc/x86_64-linux-gnu/11/include",
+                "/usr/include/x86_64-linux-gnu"
             ],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "${default}",
@@ -14,7 +15,7 @@
             "compilerArgs": [
                 ""
             ]
-        },
+        }
     ],
     "version": 4
 }

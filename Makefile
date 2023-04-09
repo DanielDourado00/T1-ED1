@@ -7,8 +7,8 @@ clear:
 	rm $(PROJECT_NAME)
 	rm *.gch
 
-$(PROJECT_NAME): lista.o main.c parameters.o systempath.o systemgeo.o circ.o svg.o
-	$(EXEC) $(CFLAGS) lista.o main.c parameters.o systempath.o systemgeo.o circ.o svg.o -o $(PROJECT_NAME) -lm
+$(PROJECT_NAME): lista.o main.c parameters.o systempath.o systemgeo.o circ.o svg.o retangulo.o
+	$(EXEC) $(CFLAGS) lista.o main.c parameters.o systempath.o systemgeo.o circ.o svg.o retangulo.o -o $(PROJECT_NAME) -lm
 
 lista.o: lista.c lista.h
 	$(EXEC) $(CFLAGS) -c lista.c
@@ -27,4 +27,7 @@ circ.o: circ.c circ.h
 
 svg.o: svg.c svg.h
 	$(EXEC) $(CFLAGS) -c svg.c
+
+retangulo.o: retangulo.c retangulo.h
+	$(EXEC) $(CFLAGS) -c retangulo.c
 
