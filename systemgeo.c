@@ -33,7 +33,7 @@ void ReadGeo(void *lista, void *parameters)
     while (!feof(peageo)) // enquanto nao chegar no final do arquivo geo
     {
         fscanf(peageo, "%s", tipo); // le o tipo da forma
-        if (strcmp(tipo, "c") == 0) // se o tipo de forma for circulo
+        if (!strcmp(tipo, "c")) // se o tipo de forma for circulo
         {
             fscanf(peageo, "%d %lf %lf %lf %s %s", &id, &x, &y, &r, corb, corp); // le as informacoes do circulo
             novaforma = createCircle(id, x, y, r, corb, corp); // cria o circulo
@@ -69,7 +69,9 @@ char checkForm(void *forma)
     if (checkCirc(aux) == true){
         return 'c';
     }
+    return ' ';
 }
+
 /* =======================================deleteforms=======================================*/
 void deleteForm(void *forma)
 {

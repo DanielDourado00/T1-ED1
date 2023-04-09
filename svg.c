@@ -1,18 +1,23 @@
 #include "svg.h"
 #include "circ.h"
 #include "lista.h"
-#include "parameters.h"
 #include "systempath.h"
 #include "systemgeo.h"
+
+typedef void* Posic;
 
 void printSvg(void *list, char *arquivo)
 {
 
     int id;
-    char *corb, *corp, *cor, *txto;
+    char *corb;
+    char *corp;
+    char *cor;
+    char *txto;
     double x, x2, y, y2, r, h, w;
 
     void *auxform;
+    void *no_aux;
     void *no;
     printf("conteudo de arquivo: %s\n", (char *)arquivo);
 
@@ -22,10 +27,12 @@ void printSvg(void *list, char *arquivo)
         printf("\nErro ao abrir o arquivo svg\n");
         exit(EXIT_FAILURE);
     }
-    printf("Arquivo svg aberto com sucesso\n\n");                                 // abre o arquivo svg para escrita, onde "w" significa "write ou seja, escrita"
-    fprintf(svg, "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n"); // escreve no arquivo svg a primeira linha
 
-    for (no == getFirstLst(list); no; no = getNextLst(list, no))
+    fprintf(svg, "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n"); // escreve no arquivo svg a primeira linha
+    printf("Arquivo svg aberto com sucesso\n\n");
+
+
+    for (no = getFirstLst(list); no; no = getNextLst(list, no))
     {                                   // percorre a lista
         auxform = getLst(list, no);     // pega o elemento da lista
         char tipo = checkForm(auxform); // pega o tipo do elemento da lista (c, r, t, etc)

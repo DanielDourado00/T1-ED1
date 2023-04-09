@@ -1,245 +1,237 @@
 #include "biblioteca.h"
 #include "lista.h"
+#include "circ.h"
+#include "systemgeo.h"
+#include "systempath.h"
 
-typedef struct Lista Wlista; // Lista  duplamente encadeada onde Wlista é um apelido para struct Lista
-typedef struct Posic Wposic; // Posic da lista onde Wposic é um apelido para struct Posic
+typedef struct Lista Plist;
+typedef struct Posic Pposic;
+typedef struct Item Pitem;
+typedef struct Iterador Piterador;
+typedef struct Clausura Pclausura;
 
-typedef struct Iterador Witerador; // Iterador da lista
-typedef struct Clausura Wclausura; // Clausura da lista
-
-/* Lista duplamente encadeda */
-
-struct iterador                     // serve para percorrer a lista e passar um parametro para a funcao
+//lista dinamica duplamente encadeada
+struct Lista        // estrutura da lista dinamica duplamente encadeada
 {
-    Wposic *posic;
-    Wlista *lista;
-};
-
-struct clausura                 // serve para percorrer a lista e passar um parametro para a funcao
-{
-    void *info;
+    Pposic *first;
+    Pposic *last;
+    int length;
+    int max_length;
 };
 
 struct Posic
-{ // Posic
-    Item *info;
-    Wposic *prox;
-    Wposic *ant;
-} posic;
-
-struct Lista
 {
-    Wposic *inicio; // inicio da lista (head)
-    Wposic *fim;    // fim da lista (tail)
-    int tamanho;    // tamanho da lista
-    int capacidade; // capacidade da lista
-} lista;
+    Pitem *info;        // informacao do elemento da lista 
+    Pposic *next;       // ponteiro para o proximo elemento da lista
+    Pposic *prev;       // ponteiro para o elemento anterior da lista
+};                      // estrutura da posicao da lista dinamica duplamente encadeada
 
-/* alocar memoria usando calloc */
-Lista createLst(int capacidade)
+ struct Item
 {
-    Wlista *L = (Wlista *)calloc(1, sizeof(Wlista)); // com calloc eu n preciso inicializar os valores da struct com NULL
-    L->capacidade = capacidade;
-    L->tamanho = 0;
-    L->inicio = NULL;
-    L->fim = NULL;
+    void *info;
+} ;                      // estrutura do item da lista dinamica duplamente encadeada
+
+
+Lista createLst(int capacidade)         // cria uma lista dinamica duplamente encadeada
+{
+    Plist *L = (Plist *) malloc(sizeof(Plist));
+
+    L->first = NULL;
+    L->last = NULL;
+    L->length = 0;
+    L->max_length = capacidade;
     return L;
 }
 
-/** Retorna o numero de elementos da lista. */
 int lengthLst(Lista L)
-{                                // retorna o tamanho da lista
-    Wlista *lista = (Wlista *)L; // converte o tipo Lisat para Wlista
-    return lista->tamanho;       // retorna o tamanho da lista
-}
-
-/** Retorna verdadeiro se a lista L estiver vazia */
-bool isEmptyLst(Lista L)
-{                                // retorna true se a lista estiver vazia
-    Wlista *lista = (Wlista *)L; // converte o tipo Lisat para Wlista
-    if (lista->tamanho == 0)     // se o tamanho da lista for igual a 0, retorna true
-        return true;
-    else
-        return false;
-}
-
-/** Retorna verdadeiro se a lista L estiver cheia. Ou seja, se a lista
-   tiver sido criada com uma capacidade máxima e lenght(L) == maxLength(L). */
-bool isFullLst(Lista L)
 {
-    Wlista *lista = (Wlista *)L; // converte o tipo Lisat para Wlista
-    if (lista->tamanho == lista->capacidade)
-        return true;
-    else
-        return false;
+    Plist *list = (Plist *) L;
+    return list->length;
 }
 
-/**  Insere o item info no final da lista L. O comprimento da
-lista e' acrescido de 1 elemento.
-Retorna um indicador para o elemento acrescentado; ou NIL, se a lista estiver
-cheia */
+int maxLengthLst(Lista L)
+{
+    Plist *list = (Plist *) L;
+    return list->max_length;
+}
+
+bool isEmptyLst(Lista L)
+{
+    Plist *list = (Plist *) L;
+   if (list->length > 0){
+         return false; 
+   }
+   return true;
+}
+
+bool isFullLst(Lista L){
+    Plist *list = (Plist *) L;
+    return (list->length == list->max_length);
+}
+
 Posic insertLst(Lista L, Item info)
 {
-    Wlista *lista = (Wlista *)L;                         // converte o tipo Lisat para Wlista
-    Wposic *posic = (Wposic *)calloc(2, sizeof(Wposic)); // aloca memoria para a posic
-    posic->info = info;                                  // atribui o valor de info para a posic
-    if (lista->tamanho == 0)
+    Plist *list = (Plist *) L;
+    Pposic *new = (Pposic *) calloc(1, sizeof(Pposic));
+    new->info = info;
+    new->next = NULL;
+    new->prev = NULL;
+    if (list->length == 0)
     {
-        lista->inicio = posic;
-        lista->fim = posic;
-        lista->tamanho++;
-        return posic;
+        list->first = new;
+        list->last = new;
     }
     else
     {
-        lista->fim->prox = posic;
-        posic->ant = lista->fim;
-        lista->fim = posic;
-        lista->tamanho++;
-        return posic;
+        list->last->next = new;
+        new->prev = list->last;
+        list->last = new;
     }
+    list->length++;
+    printf("length: %d\n", list->length);
+    return new;
+    printf("inseriu\n");
 }
 
 Item popLst(Lista L)
-{                                                        // remove o primeiro elemento da lista
-    Wlista *lista = (Wlista *)L;                         // converte o tipo Lisat para Wlista
-    Wposic *posic = (Wposic *)calloc(2, sizeof(Wposic)); // aloca memoria para a posic
-    posic = lista->inicio;                               // atribui o valor de inicio para a posic
-    lista->inicio = posic->prox;                         // atribui o valor de prox para inicio
-    lista->tamanho--;                                    // decrementa o tamanho da lista
-    return posic->info;                                  // retorna o valor de info
+{
+    Plist *list = (Plist *) L;
+    Pposic *aux = list->first;
+    Item info = aux->info;
+    list->first = aux->next;
+    list->first->prev = NULL;
+    free(aux);
+    list->length--;
+    return info;
 }
 
-/** Remove o elemento da lista L indicado por p.  p deve indicar um elemento existente em L. O comprimento da lista e' diminuido de 1 elemento. */
 void removeLst(Lista L, Posic p)
 {
-    Wlista *lista = (Wlista *)L;                         // converte o tipo Lisat para Wlista
-    Wposic *posic = (Wposic *)calloc(2, sizeof(Wposic)); // aloca memoria para a posic
-    posic = p;                                           // atribui o valor de p para a posic
-    if (posic == lista->inicio)
-    {                                // se a posic for igual ao inicio da lista
-        lista->inicio = posic->prox; // atribui o valor de prox para inicio
-        lista->tamanho--;            // decrementa o tamanho da lista
-    }
-    else if (posic == lista->fim)
-    {                            // se a posic for igual ao fim da lista
-        lista->fim = posic->ant; // atribui o valor de ant para fim
-        lista->tamanho--;        // decrementa o tamanho da lista
+    Plist *list = (Plist *) L;
+    Pposic *posic = (Pposic *) p;
+    if (posic->prev == NULL)
+    {
+        list->first = posic->next;
     }
     else
-    {                                   // se a posic for igual a qualquer posic da lista
-        posic->ant->prox = posic->prox; // atribui o valor de prox para ant->prox
-        posic->prox->ant = posic->ant;  // atribui o valor de ant para prox->ant
-        lista->tamanho--;               // decrementa o tamanho da lista
+    {
+        posic->prev->next = posic->next;
     }
+    if (posic->next == NULL)
+    {
+        list->last = posic->prev;
+    }
+    else
+    {
+        posic->next->prev = posic->prev;
+    }
+    free(posic);
+    list->length--;
 }
 
 Item getLst(Lista L, Posic p)
-{                                                        // retorna o valor de info
-    Wlista *lista = (Wlista *)L;                         // converte o tipo Lisat para Wlista
-    Wposic *posic = (Wposic *)calloc(2, sizeof(Wposic)); // aloca memoria para a posic
-    posic = p;                                           // atribui o valor de p para a posic
-    return posic->info;                                  // retorna o valor de info
+{
+    Plist *list = (Plist *) L;
+    if (isEmptyLst(list)){
+        return NIL;
+    }
+    Pposic *posic = (Pposic *) p;
+    return posic->info;
 }
 
-
-Posic insertBefore(Lista L,Posic p, Item info){           // insere um elemento antes de uma posic
-    Wlista *lista = (Wlista *)L;                          // converte o tipo Lisat para Wlista
-    Wposic *posic = (Wposic *)calloc(2, sizeof(Wposic));  // aloca memoria para a posic
-    Wposic *posic2 = (Wposic *)calloc(3, sizeof(Wposic)); // aloca memoria para a posic2
-    posic = p;                                            // atribui o valor de p para a posic
-    posic2->info = info;                                  // atribui o valor de info para a posic2
-    if (posic == lista->inicio){                          // se a posic for igual ao inicio da lista, ou seja ela vai ser o novo inicio
-        lista->inicio->ant = posic2;
-        posic2->prox = lista->inicio;
-        lista->inicio = posic2;
-        lista->tamanho++;
-        return posic2;
+Posic insertBefore(Lista L, Posic p, Item info)
+{
+    Plist *list = (Plist *) L;
+    Pposic *posic = (Pposic *) p;
+    Pposic *new = (Pposic *) calloc(1, sizeof(Pposic));
+    new->info = info;
+    new->next = posic;
+    new->prev = posic->prev;
+    if (posic->prev == NULL)
+    {
+        list->first = new;
     }
-    else{                                                   // se a posic for igual a qualquer posic da lista
-        posic->ant->prox = posic2;                          // atribui o valor de posic2 para ant->prox
-        posic2->ant = posic->ant;                           // atribui o valor de ant para posic2->ant
-        posic->ant = posic2;                                // atribui o valor de posic2 para ant
-        posic2->prox = posic;                               // atribui o valor de posic para posic2->prox
-        lista->tamanho++;                                   // incrementa o tamanho da lista
-        return posic2;
+    else
+    {
+        posic->prev->next = new;
     }
+    posic->prev = new;
+    list->length++;
+    return new;
 }
-
 
 Posic insertAfterLst(Lista L, Posic p, Item info)
 {
-    Wlista *lista = (Wlista *)L;                          // converte o tipo Lisat para Wlista
-    Wposic *posic = (Wposic *)calloc(2, sizeof(Wposic));  // aloca memoria para a posic
-    Wposic *posic2 = (Wposic *)calloc(3, sizeof(Wposic)); // aloca memoria para a posic2
-    posic = p;                                            // atribui o valor de p para a posic
-    posic2->info = info;                                  // atribui o valor de info para a posic2
-    if (posic == lista->fim){                             // se a posic for igual ao fim da lista, ou seja ela vai ser o novo fim
-        lista->fim->prox = posic2;
-        posic2->ant = lista->fim;
-        lista->fim = posic2;
-        lista->tamanho++;
-        return posic2;
+    Plist *list = (Plist *) L;
+    Pposic *posic = (Pposic *) p;
+    Pposic *new = calloc(1, sizeof(Pposic));
+    new->info = info;
+    new->next = posic->next;
+    new->prev = posic;
+    if (posic->next == NULL)
+    {
+        list->last = new;
     }
-    else{                                                   // se a posic for igual a qualquer posic da lista, ou seja ela vai ser uma posic no meio da lista
-        posic2->prox = posic->prox;
-        posic2->ant = posic;
-        posic->prox->ant = posic2;
-        posic->prox = posic2;
-        lista->tamanho++;
-        return posic2;  
+    else
+    {
+        posic->next->prev = new;
     }
+    posic->next = new;
+    list->length++;
+    return new;
 }
 
-/** Retorna o indicador do primeiro elemento de L. Se
-length(L)=0, retorna NIL. */
-Posic getFirstLst(Lista L){
-    Wlista *lista = (Wlista *)L; // converte o tipo Lisat para Wlista
-    return lista->inicio;
+Posic getFirstLst(Lista L)
+{
+    Plist *list = (Plist *) L;
+    if (list->length == 0) {
+        return NIL;
+    }
+    return list->first;
 }
 
-/** Retorna o indicador do elemento de L seguinte ao elemento
-indicado por p. Se p for o ultimo elemento da lista, retorna NIL.
-p deve indicar um elemento existente em L.*/
-Posic getNextLst(Lista L,Posic p){
-    Wlista *lista = (Wlista *)L;                         // converte o tipo Lisat para Wlista
-    Wposic *posic = (Wposic *)calloc(2, sizeof(Wposic)); // aloca memoria para a posic
-    posic = p;                                           // atribui o valor de p para a posic
-    return posic->prox;
+Posic getNextLst(Lista L, Posic p) {
+    Plist *list = (Plist *) L;
+    Pposic *posic = (Pposic *) p;
+
+    // Verifica se p está dentro dos limites da lista L
+    if (posic == NULL || posic->next == NULL) {
+        return NIL;
+    }
+    // Retorna a posição seguinte a p
+    return posic->next;
 }
 
 
-Posic getLastLst(Lista L){                    // retorna o valor de fim
-    Wlista *lista = (Wlista *)L;              // converte o tipo Lisat para Wlista
-    return lista->fim;
-
-}
-/** Retorna o indicador do elemento de L anterior ao elemento
-indicado por p. Se p for o primeiro elemento da lista, retorna NIL.
-p deve indicar um elemento existente em L. */
-Posic getPreviousLst(Lista L,Posic p){
-    Wlista *lista = (Wlista *)L;                         // converte o tipo Lisat para Wlista
-    Wposic *posic = (Wposic *)calloc(2, sizeof(Wposic)); // aloca memoria para a posic
-    posic = p;                                           // atribui o valor de p para a posic
-    return posic->ant;
+Posic getLastLst(Lista L)
+{
+    Plist *list = (Plist *) L;
+    if (isEmptyLst(list)){
+        return NIL;
+    }
+    return list->last;
 }
 
-/** Libera toda memoria alocada pela lista. */
-void killLst(Lista L){                                     // libera a memoria de inicio
-    Wlista *lista = (Wlista *)L;                           // converte o tipo Lisat para Wlista
-    Wposic *posic = (Wposic *)calloc(2, sizeof (Wposic));  // aloca memoria para a posic
-    posic = lista->inicio;                                 // atribui o valor de inicio para a posic
-    while (posic != NULL){                                 // enquanto a posic for diferente de NULL
-        lista->inicio = posic->prox;                       //atribui o valor de prox para inicio
-        free(posic);                                       // libera a memoria de posic
-        posic = lista->inicio;                             // atribui o valor de inicio para a posic
+Posic getPreviousLst(Lista L, Posic p)
+{
+    Pposic *posic = (Pposic *) p;
+    
+    if (posic->prev == NULL) { // p é o primeiro elemento da lista
+        return NIL;
+    } else { // p não é o primeiro elemento da lista
+        return posic->prev;
     }
 }
-/**
-   Retorna um iterador sobre a lista L. 
-   O iterador "anda" do inicio ate' o fim, caso reverso for falso;
-   do fim para o inicio, se reverso for verdadeiro.
- */
-/* Iterador createIterador(Lista L, bool reverso){
 
-} */
+void killLst(Lista L)
+{
+    Plist *list = (Plist *) L;
+    Pposic *aux = list->first;
+    while (aux != NULL)
+    {
+        list->first = aux->next;
+        free(aux);
+        aux = list->first;
+    }
+    free(list);
+}
