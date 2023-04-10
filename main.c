@@ -7,6 +7,7 @@
 #include "svg.h"
 #include "retangulo.h"
 #include "linha.h"
+#include "txto.h"
 
 // tirando o Path e deixando void no create
 

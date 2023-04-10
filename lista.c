@@ -5,6 +5,7 @@
 #include "systempath.h"
 #include "retangulo.h"
 #include "linha.h"
+#include "txto.h"
 
 typedef struct Lista Plist;
 typedef struct Posic Pposic;
@@ -55,6 +56,7 @@ int maxLengthLst(Lista L)
 {
     Plist *list = (Plist *) L;
     return list->max_length;
+    printf("\ncomprimento maximo: %d\n", list->max_length);
 }
 
 bool isEmptyLst(Lista L)
@@ -69,6 +71,8 @@ bool isEmptyLst(Lista L)
 bool isFullLst(Lista L){
     Plist *list = (Plist *) L;
     return (list->length == list->max_length);
+    printf("lista cheia\n");
+
 }
 
 Posic insertLst(Lista L, Item info)
@@ -90,7 +94,7 @@ Posic insertLst(Lista L, Item info)
         list->last = new;
     }
     list->length++;
-    printf("length: %d\n", list->length);
+    printf("comprimento: %d\n", list->length);
     return new;
     printf("inseriu\n");
 }

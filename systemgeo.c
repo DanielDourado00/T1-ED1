@@ -4,6 +4,7 @@
 #include "circ.h"
 #include "retangulo.h"
 #include "linha.h"
+#include "txto.h"
 
 /* ============================== ler informacoes das formas para salvar na lista ==============================*/
 
@@ -51,6 +52,12 @@ void ReadGeo(void *lista, void *parameters)
             novaforma = createLinha(id, x, y, x2, y2, cor);                      // cria a linha
             insertLst(lista, novaforma);                                                                     /*             novaforma = createNode(novaforma); // cria um no para a linha                                                                               */
         }
+        else if(!strcmp(tipo, "t"))
+        {
+            fscanf(peageo, "%d %lf %lf %s %s %s %s", &id, &x, &y, a, corb, corp, txto); // le as informacoes do texto
+            novaforma = createTxt(id, x, y, a, corb, corp, txto); // cria o texto
+            insertLst(lista, novaforma); // insere o no na lista
+        }
 
         strcpy(tipo, " "); // limpa a variavel tipo
     }
@@ -74,6 +81,10 @@ char checkForm(void *forma)
     {
         return 'l';
     }
+    else if (checkTxt(aux) == true)
+    {
+        return 't';
+    }
     return ' ';
 }
 
@@ -82,4 +93,7 @@ void deleteForm(void *forma)
 {
     void *aux = forma;
     freeCircle(aux);
+    freeRetangulo(aux);
+    freeLinha(aux);
+    freeTxt(aux);
 }

@@ -5,6 +5,7 @@
 #include "lista.h"
 #include "systempath.h"
 #include "systemgeo.h"
+#include "txto.h"
 
 typedef void *Posic;
 
@@ -12,14 +13,15 @@ void printSvg(void *list, char *arquivo)
 {
 
     int id;
+    double x, x2, y, y2, r, h, w;
     char *corb;
     char *corp;
     char *cor;
     char *txto;
-    double x, x2, y, y2, r, h, w;
+    char *a;
+
 
     void *auxform;
-    void *no_aux;
     void *no;
     printf("conteudo de arquivo: %s\n", (char *)arquivo);
 
@@ -72,6 +74,18 @@ void printSvg(void *list, char *arquivo)
             y2 = getLinhaY2(auxform);
             cor = getLinhaCor(auxform);
             fprintf(svg, "<line id=\"%d\" x1=\"%lf\" y1=\"%lf\" x2=\"%lf\" y2=\"%lf\" stroke=\"%s\" stroke-width=\"1\" />\n", id, x, y, x2, y2, cor);
+            fflush(svg);
+            break;
+        case 't':
+            auxform = getLst(list, no);
+            id = getTxtId(auxform);
+            x = getTxtX(auxform);
+            y = getTxtY(auxform);
+            corb = getTxtCorb(auxform);
+            corp = getTxtCorp(auxform);
+            txto = getTxtTxto(auxform);
+            a = getTxtA(auxform);
+            fprintf(svg, "<text id=\"%d\" x=\"%lf\" y=\"%lf\" stroke=\"%s\" stroke-width=\"1\" fill=\"%s\" text-anchor=\"%s\">%s</text>\n", id, x, y, corb, corp, a, txto);
             fflush(svg);
             break;
         }
