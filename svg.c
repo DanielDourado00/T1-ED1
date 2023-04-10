@@ -1,10 +1,10 @@
 #include "svg.h"
-#include "circ.h"
-#include "retangulo.h"
-#include "linha.h"
 #include "lista.h"
 #include "systempath.h"
 #include "systemgeo.h"
+#include "circ.h"
+#include "retangulo.h"
+#include "linha.h"
 #include "txto.h"
 
 typedef void *Posic;
@@ -19,7 +19,6 @@ void printSvg(void *list, char *arquivo)
     char *cor;
     char *txto;
     char *a;
-
 
     void *auxform;
     void *no;
@@ -77,14 +76,22 @@ void printSvg(void *list, char *arquivo)
             fflush(svg);
             break;
         case 't':
+            printf("\n\t\tCUZINHO IGNORANTE DEBUGADOR DE MERDA\n");
             auxform = getLst(list, no);
             id = getTxtId(auxform);
+            printf("id: %d\n", id);
             x = getTxtX(auxform);
+            printf("x: %lf\n", x);
             y = getTxtY(auxform);
+            printf("y: %lf\n", y);
             corb = getTxtCorb(auxform);
+            printf("corb: %s\n", corb);
             corp = getTxtCorp(auxform);
-            txto = getTxtTxto(auxform);
+            printf("corp: %s\n", corp);
             a = getTxtA(auxform);
+            printf("a: %s\n", a);
+            txto = getTxtTxto(auxform);
+            printf("txto: %s\n", txto);
             fprintf(svg, "<text id=\"%d\" x=\"%lf\" y=\"%lf\" stroke=\"%s\" stroke-width=\"1\" fill=\"%s\" text-anchor=\"%s\">%s</text>\n", id, x, y, corb, corp, a, txto);
             fflush(svg);
             break;

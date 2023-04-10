@@ -5,9 +5,9 @@ typedef struct texto{
     int id;
     double x;
     double y;
-    char a[1];
     char corp[20];
     char corb[20];
+    char a[1];
     char txto[100];
     /* variaveis para o qry */
 } Texto;
@@ -37,11 +37,13 @@ void setTxtY(void *biao, double Ty){
 void setTxtA(void *biao, char *Ta){
     Texto *Tex = biao;
     strcpy(Tex->a, Ta);
+printf("\nconteudo de a cuzinho na funcao settxtA: %s\n", Tex->a);
 }
 
 void setTxtCorp(void *biao, char *Tcorp){
     Texto *Tex = biao;
     strcpy(Tex->corp, Tcorp);
+    printf("\nconteudo de corp cuzinho na funcao settxtCorp: %s\n", Tex->corp);
 }
 
 void setTxtCorb(void *biao, char *Tcorb){
@@ -104,15 +106,17 @@ bool checkTxt(void *bião){
     return false;
 }
 
-void* createTxt(int id, double x, double y, char *a, char *corb, char *corp, char *txto){
+void* createTxt(int id, double x, double y, char *corb, char *corp, char *a, char *txto){
     Texto *Tex = calloc(1, sizeof(Texto));
+    printf("\nconteudo de a cuzinho na funcao creatxt: %s\n", a);
+    printf("\nconteudo de corp cuzinho na funcao creatxt: %s\n", corp);
     setTxtId(Tex, id);
     setTxtTipo(Tex, 't');
     setTxtX(Tex, x);
     setTxtY(Tex, y);
-    setTxtA(Tex, a);
     setTxtCorb(Tex, corb);
     setTxtCorp(Tex, corp);
+    setTxtA(Tex, a);
     setTxtTxto(Tex, txto);
     return Tex;
 }

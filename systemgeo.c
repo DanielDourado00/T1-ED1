@@ -12,7 +12,7 @@ void ReadGeo(void *lista, void *parameters)
 {
     int id;
     double x, x2, y, y2, r, h, w;                               // onde x e y sao as coordenadas da localização das formas, x2 e y2 sao as coordenadas do ponto final da linha, r é o raio do circulo, h e w sao a altura e largura do retangulo
-    char tipo[2], corb[20], corp[20], cor[20], txto[200], a[1]; // onde corb e corp sao as cores da borda e do preenchimento, tipo é o tipo da forma, cor é a cor da forma, txto é o texto da forma
+    char tipo[2], corb[20], corp[20], cor[20], txto[100], a[1]; // onde corb e corp sao as cores da borda e do preenchimento, tipo é o tipo da forma, cor é a cor da forma, txto é o texto da forma
     void *novaforma;
     void *geo;
 
@@ -54,8 +54,9 @@ void ReadGeo(void *lista, void *parameters)
         }
         else if(!strcmp(tipo, "t"))
         {
-            fscanf(peageo, "%d %lf %lf %s %s %s %s", &id, &x, &y, a, corb, corp, txto); // le as informacoes do texto
-            novaforma = createTxt(id, x, y, a, corb, corp, txto); // cria o texto
+            fscanf(peageo, "%d %lf %lf %s %s %s %s", &id, &x, &y, corb, corp, a, txto); // le as informacoes do texto
+            printf("\nid: %d\n x: %lf\n y: %lf\n corb: %s\n corp: %s\n a: %s\n txto: %s\n", id, x, y, corb, corp, a, txto);
+            novaforma = createTxt(id, x, y, corb, corp, a, txto); // cria o texto
             insertLst(lista, novaforma); // insere o no na lista
         }
 
