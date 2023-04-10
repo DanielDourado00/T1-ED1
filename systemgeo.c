@@ -12,7 +12,7 @@ void ReadGeo(void *lista, void *parameters)
 {
     int id;
     double x, x2, y, y2, r, h, w;                               // onde x e y sao as coordenadas da localização das formas, x2 e y2 sao as coordenadas do ponto final da linha, r é o raio do circulo, h e w sao a altura e largura do retangulo
-    char tipo[2], corb[20], corp[20], cor[20], txto[100], a[1]; // onde corb e corp sao as cores da borda e do preenchimento, tipo é o tipo da forma, cor é a cor da forma, txto é o texto da forma
+    char tipo[2], corb[20], corp[20], cor[20], txto[100], a[2]; // onde corb e corp sao as cores da borda e do preenchimento, tipo é o tipo da forma, cor é a cor da forma, txto é o texto da forma
     void *novaforma;
     void *geo;
 

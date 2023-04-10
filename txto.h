@@ -3,6 +3,7 @@
 #define TXTO_H
 
 bool checkTxt(void *bião);
+void printTxt(void *biao);
 
 /* inicio das declaracoes gets da tad texto */
 char getTxtTipo(void *bião);

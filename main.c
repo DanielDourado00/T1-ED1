@@ -27,4 +27,5 @@ int main(int argc, char **argv)
 
   ReadGeo(list, parameters);                // le o .geo
   printSvg(list, getpsageosvg(parameters)); // vai para svg.c e cria o .svg com as informações da lista e o caminho do .svg passado por parametro no terminal
+  
 }

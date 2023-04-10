@@ -7,10 +7,13 @@ typedef struct texto{
     double y;
     char corp[20];
     char corb[20];
-    char a[1];
+    char a[2];
     char txto[100];
     /* variaveis para o qry */
 } Texto;
+
+/* imprimir o conteudo da struct a cima */
+
 
 /* ===========================================inicio dos sets/=========================================== */
 /* os sets vao ser usados para setar as informacoes da linha e fazer as operacoes com o qry, segue a ordem da struct line */
@@ -120,6 +123,7 @@ void* createTxt(int id, double x, double y, char *corb, char *corp, char *a, cha
     setTxtTxto(Tex, txto);
     return Tex;
 }
+
 
 /* ===========================================fim dos sets/=========================================== */
 /* free */
