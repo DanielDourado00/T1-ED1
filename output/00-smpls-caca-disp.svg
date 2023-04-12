@@ -1,16 +1,4 @@
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-<text id="8" x="25.303948" y="347.002440" stroke="#00AA00" stroke-width="1" fill="#002B22" font-family="sans" font-weight="b+" font-size="14" text-anchor="m">|-T-|</text>
-<text id="9" x="37.280954" y="347.380853" stroke="#00AA00" stroke-width="1" fill="#002B22" font-family="sans" font-weight="b+" font-size="14" text-anchor="m">|-T-|</text>
-<text id="10" x="267.989771" y="56.508439" stroke="#00AA00" stroke-width="1" fill="#002B22" font-family="sans" font-weight="b+" font-size="14" text-anchor="m">|-T-|</text>
-<text id="11" x="375.257186" y="246.075929" stroke="#00AA00" stroke-width="1" fill="#002B22" font-family="sans" font-weight="b+" font-size="14" text-anchor="m">|-T-|</text>
-<text id="12" x="208.727336" y="297.231000" stroke="#00AA00" stroke-width="1" fill="#002B22" font-family="sans" font-weight="b+" font-size="14" text-anchor="m">|-T-|</text>
-<text id="13" x="396.330772" y="218.827393" stroke="#00AA00" stroke-width="1" fill="#002B22" font-family="sans" font-weight="b+" font-size="14" text-anchor="m">|-T-|</text>
-<text id="14" x="252.264477" y="434.957191" stroke="#00AA00" stroke-width="1" fill="#002B22" font-family="sans" font-weight="b+" font-size="14" text-anchor="m">|-T-|</text>
-<text id="15" x="45.613466" y="383.194877" stroke="#00AA00" stroke-width="1" fill="#002B22" font-family="sans" font-weight="b+" font-size="14" text-anchor="m">|-T-|</text>
-<text id="1" x="19.117328" y="249.818677" stroke="#5599FF" stroke-width="1" fill="#0000D4" font-family="cursive" font-weight="n" font-size="6" text-anchor="m">v_O_v</text>
-<text id="2" x="256.226718" y="235.334332" stroke="#5599FF" stroke-width="1" fill="#0000D4" font-family="cursive" font-weight="n" font-size="6" text-anchor="m">v_O_v</text>
-<text id="3" x="431.390405" y="335.555757" stroke="#5599FF" stroke-width="1" fill="#0000D4" font-family="cursive" font-weight="n" font-size="6" text-anchor="m">v_O_v</text>
-<text id="4" x="286.879201" y="79.260572" stroke="#5599FF" stroke-width="1" fill="#0000D4" font-family="cursive" font-weight="n" font-size="6" text-anchor="m">v_O_v</text>
-<text id="5" x="158.486924" y="47.835063" stroke="#5599FF" stroke-width="1" fill="#0000D4" font-family="cursive" font-weight="n" font-size="6" text-anchor="m">v_O_v</text>
-<text id="6" x="400.167950" y="222.526737" stroke="#5599FF" stroke-width="1" fill="#0000D4" font-family="cursive" font-weight="n" font-size="6" text-anchor="m">v_O_v</text>
+<text id="1" x="50.000000" y="10.000000" stroke="blue" stroke-width="1" fill="blue" text-anchor="m">|-T-|</text>
+<text id="5" x="62.628570" y="-2.256708" stroke="orange" stroke-width="1" fill="orange" text-anchor="m">v_O_v</text>
 </svg>

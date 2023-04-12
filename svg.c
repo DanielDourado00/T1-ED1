@@ -41,6 +41,8 @@ void printSvg(void *list, char *arquivo)
         auxform = getLst(list, no);     // pega o elemento da lista
         char tipo = checkForm(auxform); // pega o tipo do elemento da lista (c, r, t, etc)
 
+        bool verificador = false;
+
         switch (tipo)
         {
         case 'c':
@@ -94,10 +96,19 @@ void printSvg(void *list, char *arquivo)
             printf("a: %s\n", a);
             txto = getTxtTxto(auxform);
             printf("txto: %s\n", txto);
-            
-            fprintf(svg, "<text id=\"%d\" x=\"%lf\" y=\"%lf\" stroke=\"%s\" stroke-width=\"1\" fill=\"%s\" font-family=\"%s\" font-weight=\"%s\" font-size=\"%d\" text-anchor=\"%s\">%s</text>\n", id, x, y, corb, corp, fFamily, fWeight, fSize, a, txto);
-           //<text x=\"%f\" y=\"%f\" fill=\"%s\" stroke=\"%s\" stroke-width=\"1\" font-size=\"%f\" font-family=\"%s\" font-weight=\"%s\" text-anchor=\"%s\">%s</text>
-            fflush(svg);
+
+            if (verificador == true)
+            {
+
+                fprintf(svg, "<text id=\"%d\" x=\"%lf\" y=\"%lf\" stroke=\"%s\" stroke-width=\"1\" fill=\"%s\" font-family=\"%s\" font-weight=\"%s\" font-size=\"%d\" text-anchor=\"%s\">%s</text>\n", id, x, y, corb, corp, fFamily, fWeight, fSize, a, txto);
+                fflush(svg);
+            }
+            else
+            {
+                fprintf(svg, "<text id=\"%d\" x=\"%lf\" y=\"%lf\" stroke=\"%s\" stroke-width=\"1\" fill=\"%s\" text-anchor=\"%s\">%s</text>\n", id, x, y, corb, corp, a, txto);
+                fflush(svg);
+            }
+
             break;
 
         case 's':
@@ -107,6 +118,7 @@ void printSvg(void *list, char *arquivo)
             printf("\n\n\n\n\t fFamily: %s\n\n\n\n\n", fFamily);
             printf("\n\n\n\n\t fSize: %d\n\n\n\n\n", fSize);
             printf("\n\n\n\n\t fWeight: %s\n\n\n\n\n", fWeight);
+            verificador = true;
             break;
         }
     }
