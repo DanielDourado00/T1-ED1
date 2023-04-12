@@ -34,13 +34,18 @@ struct Posic
     void *info;
 } ;                      // estrutura do item da lista dinamica duplamente encadeada
 
+struct Iterador {
+    Lista *L;
+    Posic *pos;
+    bool *reverso;
+};
 
 Lista createLst(int capacidade)         // cria uma lista dinamica duplamente encadeada
 {
     Plist *L = (Plist *) malloc(sizeof(Plist));
 
-    L->first = NULL;
-    L->last = NULL;
+    L->first = NIL;
+    L->last = NIL;
     L->length = 0;
     L->max_length = capacidade;
     return L;
@@ -80,8 +85,8 @@ Posic insertLst(Lista L, Item info)
     Plist *list = (Plist *) L;
     Pposic *new = (Pposic *) calloc(1, sizeof(Pposic));
     new->info = info;
-    new->next = NULL;
-    new->prev = NULL;
+    new->next = NIL;
+    new->prev = NIL;
     if (list->length == 0)
     {
         list->first = new;
@@ -105,7 +110,7 @@ Item popLst(Lista L)
     Pposic *aux = list->first;
     Item info = aux->info;
     list->first = aux->next;
-    list->first->prev = NULL;
+    list->first->prev = NIL;
     free(aux);
     list->length--;
     return info;
@@ -241,3 +246,78 @@ void killLst(Lista L)
     }
     free(list);
 }
+
+/* iteradores */
+
+/* Iterador createIterador(Lista L, bool reverso) {                        // cria iterador
+    Plist *list = (Plist *) L;                                          // converte lista para Plist
+    Piterador *iterador = (Piterador *) calloc(1, sizeof(Piterador));   // aloca memória para iterador
+    iterador->pos = list->first;                                        // pos aponta para o primeiro elemento da lista
+    iterador->reverso = reverso;                                        // define se o iterador será reverso ou não
+    return iterador;                                                    // retorna iterador
+}
+
+bool isIteratorEmpty(Lista L, Iterador it){
+    Plist *list = (Plist *) L;                      // converte lista para Plist
+    Piterador *iterador = (Piterador *) it;         // converte iterador para Piterador
+    if (iterador->pos == NULL){                     // verifica se o iterador está no fim da lista
+        return true;                                // retorna true se estiver no fim da lista
+    }
+    return false;                                   // retorna false se não estiver no fim da lista
+}
+
+/* Item getIteratorNext(Lista L, Iterador it){
+    Plist *list = (Plist *) L;                      // converte lista para Plist
+    Piterador *iterador = (Piterador *) it;         // converte iterador para Piterador
+    if (iterador->pos == NULL){                     // verifica se o iterador está no fim da lista
+        return NIL;                                 // retorna NIL se estiver no fim da lista
+    }
+    Item info = iterador->pos->info;                // pega o item da posição atual do iterador
+    if (iterador->reverso == false){                // verifica se o iterador é reverso
+        iterador->pos = iterador->pos->next;        // se não for, avança para a próxima posição
+    } else {                                        // se for
+        iterador->pos = iterador->pos->prev;        // retrocede para a posição anterior
+    }
+    return info;                                    // retorna o item da posição atual do iterador
+} */
+
+/* void killIterator(Lista L, Iterador it){
+    Plist *list = (Plist *) L;                      // converte lista para Plist
+    Piterador *iterador = (Piterador *) it;         // converte iterador para Piterador
+    free(iterador);                                 // libera memória do iterador
+}
+
+/* funções auxiliares */
+
+/* Lista map(Lista L, Apply f) {                               // cria uma nova lista com os itens de L aplicados a f
+    Lista nova = createLst(L);                              // cria uma nova lista
+    Iterador it = createIterador(L, false);                 // cria um iterador para a lista L
+    while (!isIteratorEmpty(L, it)) {                       // enquanto o iterador não estiver no fim da lista
+        Item item = getIteratorNext(L, it);                 // pega o item da posição atual do iterador
+        insertAfterLst(nova, getLastLst(nova), f(item));    // insere o item aplicado a f na nova lista
+    }
+    killIterator(L, it);                                    // libera memória do iterador
+    return nova;                                            // retorna a nova lista
+}
+
+Lista filter(Lista L, Check f){
+    Lista nova = createLst(L);                              // cria uma nova lista
+    Iterador it = createIterador(L, false);                 // cria um iterador para a lista L
+    while (!isIteratorEmpty(L, it)) {                       // enquanto o iterador não estiver no fim da lista
+        Item item = getIteratorNext(L, it);                 // pega o item da posição atual do iterador
+        if (f(item) == true){                               // verifica se o item passa no teste de f
+            insertAfterLst(nova, getLastLst(nova), item);   // insere o item na nova lista
+        }
+    }
+    killIterator(L, it);                                    // libera memória do iterador
+    return nova;                                            // retorna a nova lista
+}
+
+void fold(Lista L, ApplyClosure f, Clausura c){
+    Iterador it = createIterador(L, false);                 // cria um iterador para a lista L
+    while (!isIteratorEmpty(L, it)) {                       // enquanto o iterador não estiver no fim da lista
+        Item item = getIteratorNext(L, it);                 // pega o item da posição atual do iterador
+        f(item, c);                                         // aplica a função f ao item e a clausura
+    }
+    killIterator(L, it);                                    // libera memória do iterador
+} */ 

@@ -3,16 +3,18 @@
 typedef struct texto{
     char tipo;
     int id;
+   // int fSize;
     double x;
     double y;
     char corp[20];
     char corb[20];
-    char a[2];
+    char a[3];
     char txto[100];
-    /* variaveis para o qry */
+/*     char fFamily[20]; */
+    /*char fWeight[20]; */
+
 } Texto;
 
-/* imprimir o conteudo da struct a cima */
 
 
 /* ===========================================inicio dos sets/=========================================== */
@@ -26,6 +28,7 @@ void setTxtId(void *biao, int Tid){
     Texto *Tex = biao;
     Tex->id = Tid;
 }
+
 
 void setTxtX(void *biao, double Tx){
     Texto *Texto = biao;
@@ -59,6 +62,8 @@ void setTxtTxto(void *biao, char *Ttxto){
     strcpy(Tex->txto, Ttxto);
 }
 
+
+
 /* gets */
 
 char getTxtTipo(void *biao){
@@ -70,6 +75,7 @@ int getTxtId(void *biao){
     Texto *Tex = biao;
     return Tex->id;
 }
+
 
 double getTxtX(void *biao){
     Texto *Tex = biao;
@@ -101,6 +107,9 @@ char* getTxtTxto(void *biao){
     return Tex->txto;
 }
 
+
+
+
 bool checkTxt(void *bião){
     Texto *Tex = bião;
     if(Tex->tipo == 't' || Tex->tipo == 'T'){
@@ -109,11 +118,14 @@ bool checkTxt(void *bião){
     return false;
 }
 
-void* createTxt(int id, double x, double y, char *corb, char *corp, char *a, char *txto){
+
+
+void* createTxt(int id, double x, double y, char *corp, char *corb, char *a, char *txto){
     Texto *Tex = calloc(1, sizeof(Texto));
     printf("\nconteudo de a cuzinho na funcao creatxt: %s\n", a);
     printf("\nconteudo de corp cuzinho na funcao creatxt: %s\n", corp);
     setTxtId(Tex, id);
+    //setTxtFsize(Tex, fSize);
     setTxtTipo(Tex, 't');
     setTxtX(Tex, x);
     setTxtY(Tex, y);
@@ -121,8 +133,12 @@ void* createTxt(int id, double x, double y, char *corb, char *corp, char *a, cha
     setTxtCorp(Tex, corp);
     setTxtA(Tex, a);
     setTxtTxto(Tex, txto);
+/*     setfFamily(Tex, fFamily);
+    setfWeight(Tex, fWeight); */
     return Tex;
 }
+
+/*  */
 
 
 /* ===========================================fim dos sets/=========================================== */
@@ -131,3 +147,55 @@ void freeTxt(void *biao){
     Texto *Tex = biao;
     free(Tex);
 }
+
+
+/* ===================================================TS===================================================*/
+
+/* typedef struct ts{
+    char tipo;
+    char fFamily[20];
+    char fWeight[20];
+    int fSize;
+} Ts; */
+
+/* void setTxtFsize(void *biao, int Tfs){
+    Texto *Tex = biao;
+    Tex->fSize = Tfs;
+} */
+
+/* void setfFamily(void *biao, char *Tff){
+    Texto *Tex = biao;
+    strcpy(Tex->fFamily, Tff);
+}
+
+void setfWeight(void *biao, char *Tfw){
+    Texto *Tex = biao;
+    strcpy(Tex->fWeight, Tfw);
+} */
+
+/* char* getTxtfFamily(void *biao){
+    Texto *Tex = biao;
+    return Tex->fFamily;
+}
+
+char* getTxtfWeight(void *biao){
+    Texto *Tex = biao;
+    return Tex->fWeight;} */
+
+/* int getTxtFsize(void *biao){
+    Texto *Tex = biao;
+    return Tex->fSize;
+} */
+
+/* bool checkTs(void *bião){
+    Ts *Tex = bião;
+    if(strcmp(Tex->tipo, "ts") == 0){
+        return true;
+    }
+    return false;
+} */
+
+
+
+
+
