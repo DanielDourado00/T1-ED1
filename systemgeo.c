@@ -11,9 +11,12 @@
 void ReadGeo(void *lista, void *parameters)
 {
     int id;
+    int fSize;
     double x, x2, y, y2, r, h, w;                               // onde x e y sao as coordenadas da localização das formas, x2 e y2 sao as coordenadas do ponto final da linha, r é o raio do circulo, h e w sao a altura e largura do retangulo
-    char tipo[2], corb[20], corp[20], cor[20], txto[100], a[3]; // onde corb e corp sao as cores da borda e do preenchimento, tipo é o tipo da forma, cor é a cor da forma, txto é o texto da forma
+    char tipo[5], corb[20], corp[20], cor[20], txto[100], a[3]; // onde corb e corp sao as cores da borda e do preenchimento, tipo é o tipo da forma, cor é a cor da forma, txto é o texto da forma
+    char fFamily[10], fWeight[5];
     void *novaforma;
+    /*    void *newstyletext; */
     void *geo;
 
     geo = getgeofullpath(parameters); // ler o arquivo geo e salvar as informacoes na lista
@@ -50,14 +53,22 @@ void ReadGeo(void *lista, void *parameters)
         {
             fscanf(peageo, "%d %lf %lf %lf %lf %s", &id, &x, &y, &x2, &y2, cor); // le as informacoes da linha
             novaforma = createLinha(id, x, y, x2, y2, cor);                      // cria a linha
-            insertLst(lista, novaforma);                                                                     /*             novaforma = createNode(novaforma); // cria um no para a linha                                                                               */
+            insertLst(lista, novaforma);                                         /*             novaforma = createNode(novaforma); // cria um no para a linha                                                                               */
         }
-        else if(!strcmp(tipo, "t"))
+        else if (!strcmp(tipo, "ts"))
+        {
+            fscanf(peageo, "%s %s %d", fFamily, fWeight, &fSize); // le as informacoes do texto
+            printf("\n\t fFamily: %s\n\t fWeight: %s\n\t fSize: %d\n", fFamily, fWeight, fSize);
+            novaforma = createTs(fFamily, fWeight, fSize); // cria o texto
+            insertLst(lista, novaforma);                   // insere o no na lista
+        }
+        else if (!strcmp(tipo, "t"))
         {
             fscanf(peageo, "%d %lf %lf %s %s %s %s", &id, &x, &y, corb, corp, a, txto); // le as informacoes do texto
-            printf("\nid: %d\n x: %lf\n y: %lf\n corb: %s\n corp: %s\n a: %s\n txto: %s\n", id, x, y, corb, corp, a, txto);
-            novaforma = createTxt(id, x, y, corb, corp, a, txto); // cria o texto
-            insertLst(lista, novaforma); // insere o no na lista
+                                                                                                                           /*             printf("\nid: %d\n x: %lf\n y: %lf\n corb: %s\n corp: %s\n a: %s\n txto: %s\n fFamily: %s\n fWeight: %s\n fSize: %d\n", id, x, y, corb, corp, a, txto, fFamily, fWeight, fSize);
+                                                                                                                            */
+            novaforma = createTxt(id, x, y, corp, corb, a, txto);                                 // cria o texto
+            insertLst(lista, novaforma);                                                                                   // insere o no na lista
         }
 
         strcpy(tipo, " "); // limpa a variavel tipo
@@ -83,11 +94,15 @@ char checkForm(void *forma)
         return 'l';
     }
     else if (checkTxt(aux) == true)
-    {
+    {   
         return 't';
     }
-    return ' ';
+    else
+    {
+        return 's';
+    }
 }
+
 
 /* =======================================deleteforms=======================================*/
 void deleteForm(void *forma)

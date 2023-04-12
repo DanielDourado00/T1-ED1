@@ -13,13 +13,15 @@ void printSvg(void *list, char *arquivo)
 {
 
     int id;
+    int fSize;
     double x, x2, y, y2, r, h, w;
     char *corb;
     char *corp;
     char *cor;
     char *txto;
     char *a;
-
+    char *fFamily;
+    char *fWeight;
     void *auxform;
     void *no;
     printf("conteudo de arquivo: %s\n", (char *)arquivo);
@@ -92,8 +94,19 @@ void printSvg(void *list, char *arquivo)
             printf("a: %s\n", a);
             txto = getTxtTxto(auxform);
             printf("txto: %s\n", txto);
-            fprintf(svg, "<text id=\"%d\" x=\"%lf\" y=\"%lf\" stroke=\"%s\" stroke-width=\"1\" fill=\"%s\" text-anchor=\"%s\">%s</text>\n", id, x, y, corb, corp, a, txto);
+            
+            fprintf(svg, "<text id=\"%d\" x=\"%lf\" y=\"%lf\" stroke=\"%s\" stroke-width=\"1\" fill=\"%s\" font-family=\"%s\" font-weight=\"%s\" font-size=\"%d\" text-anchor=\"%s\">%s</text>\n", id, x, y, corb, corp, fFamily, fWeight, fSize, a, txto);
+           //<text x=\"%f\" y=\"%f\" fill=\"%s\" stroke=\"%s\" stroke-width=\"1\" font-size=\"%f\" font-family=\"%s\" font-weight=\"%s\" text-anchor=\"%s\">%s</text>
             fflush(svg);
+            break;
+
+        case 's':
+            fFamily = getTxtfFamily(auxform);
+            fSize = getTxtfSize(auxform);
+            fWeight = getTxtfWeight(auxform);
+            printf("\n\n\n\n\t fFamily: %s\n\n\n\n\n", fFamily);
+            printf("\n\n\n\n\t fSize: %d\n\n\n\n\n", fSize);
+            printf("\n\n\n\n\t fWeight: %s\n\n\n\n\n", fWeight);
             break;
         }
     }

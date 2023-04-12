@@ -12,7 +12,7 @@ clear:
 	rm $(PROJECT_NAME)
 	rm *.gch
 
-$(PROJECT_NAME): lista.o main.c parameters.o systempath.o systemgeo.o circ.o svg.o retangulo.o linha.o txto.o
+$(PROJECT_NAME): $(OBJETOS)
 	$(EXEC) $(CFLAGS) lista.o main.c parameters.o systempath.o systemgeo.o circ.o svg.o retangulo.o linha.o txto.o -o $(PROJECT_NAME) -lm
 
 lista.o: lista.c lista.h
