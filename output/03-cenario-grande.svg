@@ -1,18 +1,18 @@
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-<text id="8" x="25.303948" y="347.002440" stroke="#00AA00" stroke-width="1" fill="#002B22" text-anchor="m">|-T-|</text>
-<text id="9" x="37.280954" y="347.380853" stroke="#00AA00" stroke-width="1" fill="#002B22" text-anchor="m">|-T-|</text>
-<text id="10" x="267.989771" y="56.508439" stroke="#00AA00" stroke-width="1" fill="#002B22" text-anchor="m">|-T-|</text>
-<text id="11" x="375.257186" y="246.075929" stroke="#00AA00" stroke-width="1" fill="#002B22" text-anchor="m">|-T-|</text>
-<text id="12" x="208.727336" y="297.231000" stroke="#00AA00" stroke-width="1" fill="#002B22" text-anchor="m">|-T-|</text>
-<text id="13" x="396.330772" y="218.827393" stroke="#00AA00" stroke-width="1" fill="#002B22" text-anchor="m">|-T-|</text>
-<text id="14" x="252.264477" y="434.957191" stroke="#00AA00" stroke-width="1" fill="#002B22" text-anchor="m">|-T-|</text>
-<text id="15" x="45.613466" y="383.194877" stroke="#00AA00" stroke-width="1" fill="#002B22" text-anchor="m">|-T-|</text>
-<text id="1" x="19.117328" y="249.818677" stroke="#5599FF" stroke-width="1" fill="#0000D4" text-anchor="m">v_O_v</text>
-<text id="2" x="256.226718" y="235.334332" stroke="#5599FF" stroke-width="1" fill="#0000D4" text-anchor="m">v_O_v</text>
-<text id="3" x="431.390405" y="335.555757" stroke="#5599FF" stroke-width="1" fill="#0000D4" text-anchor="m">v_O_v</text>
-<text id="4" x="286.879201" y="79.260572" stroke="#5599FF" stroke-width="1" fill="#0000D4" text-anchor="m">v_O_v</text>
-<text id="5" x="158.486924" y="47.835063" stroke="#5599FF" stroke-width="1" fill="#0000D4" text-anchor="m">v_O_v</text>
-<text id="6" x="400.167950" y="222.526737" stroke="#5599FF" stroke-width="1" fill="#0000D4" text-anchor="m">v_O_v</text>
+<text id="8" x="25.303948" y="347.002440" stroke="#00AA00" stroke-width="1" fill="#002B22" font-family="sans" font-weight="b+" font-size="14" text-anchor="m">|-T-|</text>
+<text id="9" x="37.280954" y="347.380853" stroke="#00AA00" stroke-width="1" fill="#002B22" font-family="sans" font-weight="b+" font-size="14" text-anchor="m">|-T-|</text>
+<text id="10" x="267.989771" y="56.508439" stroke="#00AA00" stroke-width="1" fill="#002B22" font-family="sans" font-weight="b+" font-size="14" text-anchor="m">|-T-|</text>
+<text id="11" x="375.257186" y="246.075929" stroke="#00AA00" stroke-width="1" fill="#002B22" font-family="sans" font-weight="b+" font-size="14" text-anchor="m">|-T-|</text>
+<text id="12" x="208.727336" y="297.231000" stroke="#00AA00" stroke-width="1" fill="#002B22" font-family="sans" font-weight="b+" font-size="14" text-anchor="m">|-T-|</text>
+<text id="13" x="396.330772" y="218.827393" stroke="#00AA00" stroke-width="1" fill="#002B22" font-family="sans" font-weight="b+" font-size="14" text-anchor="m">|-T-|</text>
+<text id="14" x="252.264477" y="434.957191" stroke="#00AA00" stroke-width="1" fill="#002B22" font-family="sans" font-weight="b+" font-size="14" text-anchor="m">|-T-|</text>
+<text id="15" x="45.613466" y="383.194877" stroke="#00AA00" stroke-width="1" fill="#002B22" font-family="sans" font-weight="b+" font-size="14" text-anchor="m">|-T-|</text>
+<text id="1" x="19.117328" y="249.818677" stroke="#5599FF" stroke-width="1" fill="#0000D4" font-family="sans" font-weight="b" font-size="12" text-anchor="m">v_O_v</text>
+<text id="2" x="256.226718" y="235.334332" stroke="#5599FF" stroke-width="1" fill="#0000D4" font-family="sans" font-weight="b" font-size="12" text-anchor="m">v_O_v</text>
+<text id="3" x="431.390405" y="335.555757" stroke="#5599FF" stroke-width="1" fill="#0000D4" font-family="sans" font-weight="b" font-size="12" text-anchor="m">v_O_v</text>
+<text id="4" x="286.879201" y="79.260572" stroke="#5599FF" stroke-width="1" fill="#0000D4" font-family="sans" font-weight="b" font-size="12" text-anchor="m">v_O_v</text>
+<text id="5" x="158.486924" y="47.835063" stroke="#5599FF" stroke-width="1" fill="#0000D4" font-family="sans" font-weight="b" font-size="12" text-anchor="m">v_O_v</text>
+<text id="6" x="400.167950" y="222.526737" stroke="#5599FF" stroke-width="1" fill="#0000D4" font-family="sans" font-weight="b" font-size="12" text-anchor="m">v_O_v</text>
 <circle id="17" cx="2.000000" cy="58.000000" r="10.000000" stroke="#FFFFFF" stroke-width="1" fill-opacity="0.7" fill="#FFFF00" />
 <circle id="18" cx="157.000000" cy="18.000000" r="10.000000" stroke="#FFFFFF" stroke-width="1" fill-opacity="0.7" fill="#FFFF00" />
 <circle id="19" cx="77.000000" cy="30.000000" r="9.000000" stroke="#AA0000" stroke-width="1" fill-opacity="0.7" fill="#DE8787" />
@@ -780,7 +780,7 @@
 <line id="808" x1="330.400000" y1="291.000000" x2="330.400000" y2="299.000000" stroke="black" stroke-width="1" />
 <rect id="809" x="319.800000" y="256.100000" width="21.200000" height="4.500000" stroke="red" stroke-width="1" fill="red" />
 <rect id="810" x="319.800000" y="263.000000" width="21.200000" height="4.500000" stroke="black" stroke-width="1" fill="black" />
-<text id="811" x="336.120000" y="8.300000" stroke="#005522" stroke-width="1" fill="#005522" text-anchor="m">v_O_v</text>
+<text id="811" x="336.120000" y="8.300000" stroke="#005522" stroke-width="1" fill="#005522" font-family="cursive" font-weight="n" font-size="6" text-anchor="m">v_O_v</text>
 <rect id="812" x="186.060000" y="375.510000" width="14.000000" height="29.000000" stroke="#800080" stroke-width="1" fill="#ff00ff" />
 <line id="813" x1="177.060000" y1="365.510000" x2="186.060000" y2="378.510000" stroke="#008000" stroke-width="1" />
 <line id="814" x1="192.560000" y1="360.410000" x2="193.060000" y2="377.510000" stroke="#008000" stroke-width="1" />

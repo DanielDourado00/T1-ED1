@@ -159,8 +159,8 @@ void * createTs(char *fFamily, char *fWeight, int fSize){
     Ts *ts = calloc(1, sizeof(Ts));
     setfFamily(ts, fFamily);
     printf("\n\t\tconteudo de fFamily  na funcao creatxt: %s\n", fFamily);
-    printf("\n\t\tao ser setado, para para struct e é chamado no svg pelo get\n");
-
+/*     printf("\n\t\tao ser setado, para para struct e é chamado no svg pelo get\n");
+ */
     setfWeight(ts, fWeight);
     setTxtFsize(ts, fSize);
     ts->tipo = 's';
@@ -172,20 +172,20 @@ void * createTs(char *fFamily, char *fWeight, int fSize){
 void setTxtFsize(void *biao, int Tfs){
     Ts *Texs = biao;
     Texs->fSize = Tfs;
-    printf("\nconteudo de fSize cuzinho na funcao settxtFsize: %d\n", Texs->fSize);
-}
+/*     printf("\nconteudo de fSize cuzinho na funcao settxtFsize: %d\n", Texs->fSize);
+ */}
 
 void setfFamily(void *biao, char *Tff){
     Ts *Texs = biao;
     strcpy(Texs->fFamily, Tff);
-    printf("\nconteudo de fFamily cuzinho na funcao settxtFfamily: %s\n", Texs->fFamily);
-}
+/*     printf("\nconteudo de fFamily cuzinho na funcao settxtFfamily: %s\n", Texs->fFamily);
+ */}
 
 void setfWeight(void *biao, char *Tfw){
     Ts *Texs = biao;
     strcpy(Texs->fWeight, Tfw);
-    printf("\nconteudo de fWeight cuzinho na funcao settxtFweight: %s\n", Texs->fWeight);
-}
+/*     printf("\nconteudo de fWeight cuzinho na funcao settxtFweight: %s\n", Texs->fWeight);
+ */}
 
 /* gets do ts */
 

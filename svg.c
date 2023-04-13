@@ -40,7 +40,7 @@ void printSvg(void *list, char *arquivo)
     {                                   // percorre a lista
         auxform = getLst(list, no);     // pega o elemento da lista
         char tipo = checkForm(auxform); // pega o tipo do elemento da lista (c, r, t, etc)
-
+        int ctz;
         bool verificador = false;
 
         switch (tipo)
@@ -97,9 +97,10 @@ void printSvg(void *list, char *arquivo)
             txto = getTxtTxto(auxform);
             printf("txto: %s\n", txto);
 
-            if (verificador == true)
+            if (ctz == 1)
             {
 
+                printf("\n\tvalor 1 = true: %d\n", ctz);
                 fprintf(svg, "<text id=\"%d\" x=\"%lf\" y=\"%lf\" stroke=\"%s\" stroke-width=\"1\" fill=\"%s\" font-family=\"%s\" font-weight=\"%s\" font-size=\"%d\" text-anchor=\"%s\">%s</text>\n", id, x, y, corb, corp, fFamily, fWeight, fSize, a, txto);
                 fflush(svg);
             }
@@ -119,6 +120,7 @@ void printSvg(void *list, char *arquivo)
             printf("\n\n\n\n\t fSize: %d\n\n\n\n\n", fSize);
             printf("\n\n\n\n\t fWeight: %s\n\n\n\n\n", fWeight);
             verificador = true;
+            ctz = verificador;
             break;
         }
     }

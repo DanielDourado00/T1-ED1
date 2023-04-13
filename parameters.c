@@ -84,8 +84,8 @@ void getFileName(char *fullPath, char *fileName, char *lenFileName)
         fileName = fullPath;
         return;
     }
-    printf("\n\nconteudo de fileName do parameters.c: %s \n\n", fileName);
-}
+/*     printf("\n\nconteudo de fileName do parameters.c: %s \n\n", fileName);
+ */}
 
 void getPath(char *fullPath, char *path, int lenPath)
 {
@@ -98,8 +98,8 @@ void getPath(char *fullPath, char *path, int lenPath)
     }
     else
         path = "";
-    printf("\n\n conteudo de path do parameters.c: %s \n\n", path);
-}
+/*     printf("\n\n conteudo de path do parameters.c: %s \n\n", path);
+ */}
 
 void normalizePath(char *path, char *normPath, int lenNormPath){
     
@@ -112,5 +112,5 @@ void normalizePath(char *path, char *normPath, int lenNormPath){
     *(path + strlen( path )-1)  = '\0';// se tem "/" retira
     return;
     }
-    printf("\n\nconteudo de normPath do parameters.c: %s \n\n", normPath);
-}
+/*     printf("\n\nconteudo de normPath do parameters.c: %s \n\n", normPath);
+ */}

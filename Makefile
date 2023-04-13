@@ -2,17 +2,12 @@ EXEC = gcc
 CFLAGS = -std=c99 -fstack-protector-all -g
 PROJECT_NAME = ted
 
-ALUNO= Daniel Dourado
-LIBS= biblioteca.h
-OBJETOS= lista.o main.c parameters.o systempath.o systemgeo.o circ.o svg.o retangulo.o linha.o txto.o
-
-
 clear:
 	rm *.o
 	rm $(PROJECT_NAME)
 	rm *.gch
 
-$(PROJECT_NAME): $(OBJETOS)
+$(PROJECT_NAME): lista.o main.c parameters.o systempath.o systemgeo.o circ.o svg.o retangulo.o linha.o txto.o
 	$(EXEC) $(CFLAGS) lista.o main.c parameters.o systempath.o systemgeo.o circ.o svg.o retangulo.o linha.o txto.o -o $(PROJECT_NAME) -lm
 
 lista.o: lista.c lista.h
@@ -41,14 +36,3 @@ linha.o: linha.c linha.h
 
 txto.o: txto.c txto.h
 	$(EXEC) $(CFLAGS) -c txto.c
-
-#
-# EMPACOTAR PARA ENTREGA
-#
-#   -  se necessario: sudo apt install zip
-
-pack: $(PROJ_NAME)
-	rm -f ../$(DanielDourado).zip
-	echo $(DanielDourado)
-	date >> .entrega
-	cd ..; zip $(DanielDourado).zip -r src/*.c src/*.h src/Makefile LEIA-ME.txt .entrega

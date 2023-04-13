@@ -61,8 +61,8 @@ int maxLengthLst(Lista L)
 {
     Plist *list = (Plist *) L;
     return list->max_length;
-    printf("\ncomprimento maximo: %d\n", list->max_length);
-}
+/*     printf("\ncomprimento maximo: %d\n", list->max_length);
+ */}
 
 bool isEmptyLst(Lista L)
 {

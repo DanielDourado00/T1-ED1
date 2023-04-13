@@ -177,8 +177,8 @@ char *getpsageosvg(void *parameters)
 {
     all_paths *aux = parameters; // cast para all_paths
     return aux->psageosvg;       // retorna o path de saida do arquivo geo.svg
-    printf("\n\t conteudo de getpsageosvg: %s", aux->psageosvg);
-}
+/*     printf("\n\t conteudo de getpsageosvg: %s", aux->psageosvg);
+ */}
 
 char *getpsageoqrytxt(void *parameters)
 {
@@ -188,7 +188,7 @@ char *getpsageoqrytxt(void *parameters)
 
 /* prints para debug */
 
-void printPath(void *parameters)
+/* void printPath(void *parameters)
 {
     printf("\n\nDiretorio base de entrada (pea): %s)", getpea(parameters));
     printf("\n\nDiretorio base de saida (psa): %s)", getpsa(parameters));
@@ -207,7 +207,7 @@ void printPath(void *parameters)
     printf("\nPath de saida do arquivo geo.svg (psageosvg): %s", getpsageosvg(parameters));
     printf("\nPath de saida do arquivo qry.txt (psageoqrytxt): %s", getpsageoqrytxt(parameters));
     printf("\nPath de saida do arquivo qry.svg (psageosvg): %s", getpsageosvg(parameters));
-}
+} */
 
 /*
 
@@ -342,10 +342,10 @@ int readParam(int argc, char **argv, void *parameters)
         VerifDiretorio(psageosvg);                                                                                  // verifica se o diretorio existe, se nao existir, cria
         strcat(psageosvg, getpeageoExt(parameters));
         strcat(psageosvg, ".svg"); // concatena o nome do arquivo geo sem extensao com o path do geo.svg
-        printf("\n\tconteudo de psageosvg: %s\n\n ", psageosvg);
-        setpsageosvg(parameters, psageosvg); // envia o path do geo.svg para a tad parameters
-        printf("\n\nbião debugs\n\n");
-    }
+/*         printf("\n\tconteudo de psageosvg: %s\n\n ", psageosvg);
+ */        setpsageosvg(parameters, psageosvg); // envia o path do geo.svg para a tad parameters
+/*         printf("\n\nbião debugs\n\n");
+ */    }
 
     if (!read_qry || !read_psa)
     {
